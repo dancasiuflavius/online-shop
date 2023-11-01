@@ -74,6 +74,10 @@ namespace online_shop.Models
         {
             return _fullName;
         }
+        public void SetFullName(String fullName)
+        {
+            _fullName = fullName;
+        }
         public int GetPhone()
         {
             return _phone;
