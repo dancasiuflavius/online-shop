@@ -19,13 +19,13 @@ namespace online_shop.Models
         {
             
         }
-        public Product(string id, string name, int price, string description, DateTime createDate, int stock)
+        public Product(string id, string name, int price, string description,String createDate, int stock)
         {
             _id = id;
             _name = name;
             _price = price;
             _description = description;
-            _createDate = createDate;
+            _createDate = DateTime.Parse(createDate);
             _stock = stock;
         }
         public Product(String proprietati)
@@ -85,9 +85,9 @@ namespace online_shop.Models
         {
             return _createDate;
         }
-        public void SetCreationDate(DateTime createDate)
+        public void SetCreationDate(String createDate)
         {
-            _createDate = createDate;
+            _createDate = DateTime.Parse(createDate);
         }
         public int GetStock()
         {

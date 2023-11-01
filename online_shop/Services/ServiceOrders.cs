@@ -63,7 +63,7 @@ namespace online_shop.Services
             for (int i = 0; i < _ordersList.Count; i++)
                 Console.WriteLine(_ordersList[i].GetOrderDescription());
         }
-        public bool FindCustomerByID(Order order)
+        public bool FindOrderByID(Order order)
         {
             for (int i = 0; i < _ordersList.Count(); i++)
             {
@@ -74,7 +74,7 @@ namespace online_shop.Services
         }
         public bool AddOrder(Order order)
         {
-            if (FindCustomerByID(order) == true)
+            if (FindOrderByID(order) == true)
                 return false;
             else
                 _ordersList.Add(order);

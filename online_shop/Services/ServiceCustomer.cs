@@ -73,12 +73,13 @@ namespace online_shop.Services
 
             return false;
         }
-        public void AddCustomer(Customer customer)
+        public bool AddCustomer(Customer customer)
         {
             if (FindCustomerByID(customer) == true)
-                Console.WriteLine("The customer is already in list.");
+                return false;
             else
                 _customerList.Add(customer);
+            return true;
         }
         public bool RemoveCustomer(String id)
         {
@@ -88,11 +89,13 @@ namespace online_shop.Services
                 {
                     _customerList.RemoveAt(i);
                     return true;
+                    
                 }
             }
             return false;
+            
         }
-        public void UpdateCustomer(String id, String mail, String password, String fullName, int phone, String newId )
+        public bool UpdateCustomer(String id, String mail, String password, String fullName, int phone, String newId )
         {
             for (int i = 0; i < _customerList.Count; i++)
             {
@@ -103,8 +106,10 @@ namespace online_shop.Services
                     _customerList[i].SetFullName(fullName);
                     _customerList[i].SetPhone(phone);
                     _customerList[i].SetCustomerID(newId);
+                    return true;
                 }
             }
+            return false;
         }
     }
 }

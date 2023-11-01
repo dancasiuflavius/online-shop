@@ -63,7 +63,7 @@ namespace online_shop.Services
             for (int i = 0; i < _productsList.Count; i++)
                 Console.WriteLine(_productsList[i].GetProductDescription());
         }
-        public bool FindPrdouctByID(Product product)
+        public bool FindProductByID(Product product)
         {
             for (int i = 0; i < _productsList.Count(); i++)
             {
@@ -75,7 +75,7 @@ namespace online_shop.Services
         }
         public bool AddProduct(Product product)
         {
-            if (FindPrdouctByID(product) == true)
+            if (FindProductByID(product) == true)
                 return false;
             else
                 _productsList.Add(product);
@@ -93,7 +93,7 @@ namespace online_shop.Services
             }
             return false;
         }
-        public bool UpdateProduct(String id, String name, int price, String description, DateTime createDate, int stock, String newId)
+        public bool UpdateProduct(String id, String name, int price, String description, String createDate, int stock, String newId)
         {
             for (int i = 0; i < _productsList.Count; i++)
             {
