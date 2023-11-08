@@ -85,9 +85,9 @@ namespace online_shop.Models
         {
             return _createDate;
         }
-        public void SetCreationDate(String createDate)
+        public void SetCreationDate(DateTime createDate)
         {
-            _createDate = DateTime.Parse(createDate);
+            _createDate = createDate;
         }
         public int GetStock()
         {

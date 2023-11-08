@@ -106,7 +106,7 @@ namespace online_shop.Services
             }
             return false;
         }
-        public bool UpdateProduct(String id, String name, int price, String description, String createDate, int stock, String newId)
+        public bool UpdateProduct(String id, String name, int price, String description, DateTime createDate, int stock, String newId)
         {
             for (int i = 0; i < _productsList.Count; i++)
             {
