@@ -16,8 +16,8 @@ namespace Tests
         {
             List<Customer> _customerList = new List<Customer>();
 
-            Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
-            Customer customer2 = new Customer("2B", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+            Customer customer2 = new Customer(2, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
 
             _customerList.Add(customer1);
             _customerList.Add(customer2);
@@ -31,9 +31,9 @@ namespace Tests
         {
             List<Customer> _customerList = new List<Customer>();
 
-            Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
-            Customer customer2 = new Customer("2B", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
-            Customer customer3 = new Customer("3C", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+            Customer customer2 = new Customer(2, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer3 = new Customer(3, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
 
             _customerList.Add(customer1);
             _customerList.Add(customer2);
@@ -47,9 +47,9 @@ namespace Tests
         {
             List<Customer> _customerList = new List<Customer>();
 
-            Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
-            Customer customer2 = new Customer("2B", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
-            Customer customer3 = new Customer("3C", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+            Customer customer2 = new Customer(2, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer3 = new Customer(3, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
 
             _customerList.Add(customer1);
             _customerList.Add(customer2);
@@ -67,9 +67,9 @@ namespace Tests
            
                 List<Customer> _customerList = new List<Customer>();
 
-                Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
-                Customer customer2 = new Customer("2B", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
-                Customer customer3 = new Customer("3C", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+                Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+                Customer customer2 = new Customer(2, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+                Customer customer3 = new Customer(3, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
 
                 _customerList.Add(customer1);
                 _customerList.Add(customer2);
@@ -86,9 +86,9 @@ namespace Tests
         {
             List<Customer> _customerList = new List<Customer>();
 
-            Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
-            Customer customer2 = new Customer("2B", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
-            Customer customer3 = new Customer("3C", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+            Customer customer2 = new Customer(2, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer3 = new Customer(3, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
 
             _customerList.Add(customer1);
             _customerList.Add(customer2);
@@ -104,9 +104,9 @@ namespace Tests
         {
             List<Customer> _customerList = new List<Customer>();
 
-            Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
-            Customer customer2 = new Customer("2B", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
-            Customer customer3 = new Customer("3C", "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+            Customer customer2 = new Customer(2, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
+            Customer customer3 = new Customer(3, "customer2@mail.com", "aaa", "Graham Jarvis", 0721234142);
 
             _customerList.Add(customer1);
             _customerList.Add(customer2);
@@ -122,7 +122,7 @@ namespace Tests
         {
             List<Customer> _customerList = new List<Customer>();
 
-            Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+            Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
 
             _customerList.Add(customer1);
            
@@ -135,7 +135,7 @@ namespace Tests
         {
             List<Customer> _customerList = new List<Customer>();
 
-            Customer customer1 = new Customer("1A", "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
+            Customer customer1 = new Customer(1, "customer1@mail.com", "aaa", "John Greenwood", 0712345689);
 
             _customerList.Add(customer1);
 
