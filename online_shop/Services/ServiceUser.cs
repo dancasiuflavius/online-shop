@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using online_shop.DTO;
 using online_shop.Models;
 
 namespace online_shop.Services
@@ -70,6 +72,84 @@ namespace online_shop.Services
             catch (IOException e)
             {
                 Console.WriteLine("An error occurred while reading the file: " + e.Message);
+            }
+        }
+
+        public bool isUserById(int id)
+        {
+            for (int i = 0; i < _usersList.Count; i++)
+                if (_usersList[i].GetID() == id)
+                    return true;
+            return false;
+        }
+        public User findUserById(int id)
+        {
+            User user = null;
+            for (int i = 0; i < _usersList.Count; i++)
+                if (_usersList[i].GetID() == id)
+                {
+                    return _usersList[i];
+                }
+            return user;
+        }
+        public bool AddUser(User user)
+        {
+            switch (user)
+            {
+                case Customer customer when isUserById(customer.GetID()) == false: //Daca user este customer, modificam user in Customer, cautam in lista, daca e fals adaugam
+                    _usersList.Add(customer);
+                    return true;
+
+                case Admin admin when isUserById(admin.GetID()) == false:
+                    _usersList.Add(admin);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+        public bool RemoveUser(User user)
+        {
+            switch (user)
+            {
+                case Customer customer when isUserById(customer.GetID()) == true: 
+                    _usersList.Remove(customer);
+                    return true;
+
+                case Admin admin when isUserById(admin.GetID()) == true:
+                    _usersList.Remove(admin);
+                    return true;
+
+                default:
+                    return false;
+            }
+
+        }
+        public bool UpdateUser(UpdateUser user)
+        {
+            switch (user.type)
+            {
+                case "customer":
+                    Customer customer=findUserById(user.id) as Customer;
+                    customer.SetPhone(user.newPhone);
+                    customer.SetEmail(user.newMail);
+                    customer.SetPassword(user.newPasword);
+                    customer.SetAdress(user.newAdress);
+                    customer.SetFullName(user.newFullName);
+                   
+                    return true;
+
+                case "admin":
+                    Admin admin = findUserById(user.id) as Admin;
+                    admin.SetFunction(user.newFunction);
+                    admin.SetEmail(user.newMail);
+                    admin.SetPassword(user.newPasword);
+                                     
+                    return true;
+
+
+                default:
+                    return false;
             }
         }
 

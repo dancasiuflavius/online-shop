@@ -30,9 +30,9 @@ namespace online_shop.Models
         {
             string[] atribute = proprietati.Split(',');
             _id = atribute[0];
-            _customerID = atribute[2];
-            _ammount = Int32.Parse(atribute[3]);
-            _orderStatus = atribute[4];
+            _customerID = atribute[1];
+            _ammount = Int32.Parse(atribute[2]);
+            _orderStatus = atribute[3];
         }
         public String GetOrderDescription()
         {

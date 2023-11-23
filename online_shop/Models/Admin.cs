@@ -24,6 +24,14 @@ namespace online_shop.Models
 
             _function = atribute[4];
         }
+        public string GetFunction()
+        {
+            return this._function;
+        }
+        public void SetFunction(string function)
+        {
+            this._function = function;
+        }
         public override string ToString()
         {
 

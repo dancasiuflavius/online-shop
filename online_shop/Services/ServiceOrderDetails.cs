@@ -31,7 +31,7 @@ namespace online_shop.Services
 
             string dataFolderPath = Path.Combine(currentDirectory, "Data");
 
-            string filePath = Path.Combine(dataFolderPath, "order_details.txt");
+            string filePath = Path.Combine(dataFolderPath, "order-details.txt");
 
             return filePath;
         }
