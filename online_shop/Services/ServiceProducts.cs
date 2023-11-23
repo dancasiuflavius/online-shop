@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using online_shop.Common;
 using online_shop.Models;
 
 namespace online_shop.Services
@@ -123,46 +126,70 @@ namespace online_shop.Services
             }
             return false;
         }
-        public List<Product> AscendingSortByPrice(List<Product> _productList)
+        public List<Product> AscendingSortByPrice()
         {
             Product aux = new Product();
            
-            for (int i = 0; i < _productList.Count; i++)
+            for (int i = 0; i < _productsList.Count; i++)
             {
-                for (int j = 0; j < _productList.Count; j++)
-                    if (_productList[i].GetPrice() < _productList[j].GetPrice())
+                for (int j = 0; j < _productsList.Count; j++)
+                    if (_productsList[i].GetPrice() < _productsList[j].GetPrice())
                     {
-                        aux=_productList[i];
-                        _productList[i]=_productList[j];
-                        _productList[j]=aux;                     
+                        aux=_productsList[i];
+                        _productsList[i]=_productsList[j];
+                        _productsList[j]=aux;                     
                     }
             }
-            return _productList;
+            return _productsList;
            
 
         }
-        public List<Product> DescendingSortByPrice(List<Product> _productList)
+        public List<Product> DescendingSortByPrice()
         {
             Product aux = new Product();
 
-            for (int i = 0; i < _productList.Count; i++)
+            for (int i = 0; i < _productsList.Count; i++)
             {
-                for (int j = 0; j < _productList.Count; j++)
-                    if (_productList[i].GetPrice() > _productList[j].GetPrice())
+                for (int j = 0; j < _productsList.Count; j++)
+                    if (_productsList[i].GetPrice() > _productsList[j].GetPrice())
                     {
-                        aux = _productList[i];
-                        _productList[i] = _productList[j];
-                        _productList[j] = aux;
+                        aux = _productsList[i];
+                        _productsList[i] = _productsList[j];
+                        _productsList[j] = aux;
                     }
             }
-            return _productList;
+            return _productsList;
         }
-        public List<Product> SortDate(List<Product> list)
+        public List<Product> SortDate()
         {
             Product a = new Product();
             Product b = new Product();
-            list.Sort((a, b) => a.GetCreationDate().CompareTo(b.GetCreationDate()));
-            return list;
+            _productsList.Sort((a, b) => a.GetCreationDate().CompareTo(b.GetCreationDate()));
+            return _productsList;
+        }
+        public Product GetProductDetailsByName(String name)
+        {
+            for (int i = 0; i < _productsList.Count; i++)
+                if (_productsList[i].GetProductName().Equals(name))
+                    return _productsList[i];
+                
+           return null;
+        }
+        public Product BuyProduct(String productName, int qty)
+        {
+            Product product = new Product();
+            Product aux = new Product();
+            Cos cos = new Cos();
+            if (GetProductDetailsByName(productName) != null)
+            
+                product = GetProductDetailsByName(productName);
+                if (product.GetStock() > qty)
+                    return product;
+            
+            else
+                return null;
+            
+                
         }
 
 

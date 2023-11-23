@@ -80,12 +80,9 @@ namespace online_shop.Models
         }
         public override bool Equals(object? obj)
         {
-
             User user = obj as User;
 
-
             return this._email.Equals(user._email);
-
         }
 
 

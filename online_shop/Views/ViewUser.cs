@@ -27,54 +27,36 @@ namespace online_shop.Views
 
 
 
-        public void Meniu()
+        public virtual  void Meniu()
         {
             Console.WriteLine("Apasati tasta 1 pentru a afisa lista de produse");
-            Console.WriteLine("Apasati tasta 2 pentru a afisa detaliile comenzii");
-                  
+            Console.WriteLine("Apasati tasta 2 pentru a afisa produsele in ordine crescatoare dupa pret.");
+            Console.WriteLine("Apasati tasta 3 pentru a afisa produsele in ordine crescatoare dupa pret.");
+            Console.WriteLine("Apasati tasta 4 pentru a afisa produsele dupa data.");
+
         }
 
         public void ShowProducts()
         {
             _serviceProducts.ShowProducts();
         }
-        public void ShowOrderDetails()
+        public void ShowAscByPrice()
+        {          
+            _serviceProducts.AscendingSortByPrice();
+            _serviceProducts.ShowProducts();
+        }
+        public void ShowDscByPrice()
         {
-            _serviceOrderDetails.ShowOrderDetails();
+            _serviceProducts.DescendingSortByPrice();
+            _serviceProducts.ShowProducts();
+        }
+        public void ShowByDate()
+        {
+            _serviceProducts.SortDate();
+            _serviceProducts.ShowProducts();
         }
 
 
-        public void Play()
-        {
-
-            bool running = true;
-
-            int alegere = 0;
-
-
-
-            while (running)
-            {
-                Meniu();
-
-                alegere = Int32.Parse(Console.ReadLine());
-
-
-                switch (alegere)
-                {
-                    case 1:
-                        ShowProducts();
-                        break;
-                    case 2:
-                        ShowOrderDetails();
-                        break;
-                  
-
-                    default:
-                        Console.WriteLine("Comanda invalida");
-                        break;
-                }
-            }
-        }
+       
     }
 }

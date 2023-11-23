@@ -3,6 +3,7 @@ using online_shop.Services;
 using System.ComponentModel.Design;
 using System.Numerics;
 using online_shop.Views;
+using online_shop.Common;
 
 internal class Program
 {
@@ -23,8 +24,8 @@ internal class Program
         //_serviceUser.UpdateUser(new online_shop.DTO.UpdateUser {id=5, type = "admin", newMail = "yahoo.com", newAdress = "Sibiu", newFullName = "Flavius Dancasiu", newPasword = "xtzu", newPhone = 077777777, newFunction = "high permission"});
         //Console.WriteLine( _serviceUser.ToString());
 
-        ViewUser viewUser = new ViewUser();
-        viewUser.Play();
+        ViewCustomer viewCustomer = new ViewCustomer();
+        viewCustomer.Play();
 
         //ServiceOrderDetails oD = new ServiceOrderDetails();
         //oD.ShowOrderDetails();
@@ -32,5 +33,15 @@ internal class Program
 
         //ServiceOrders orders = new ServiceOrders();
         //orders.ShowOrders();
+
+        //Product product = new Product("P1", "Iphone", 1200, "Iphone 13 Pro", "05 / 05 / 2021", 10);
+        //Cos cos = new Cos();
+        //ServiceProducts serviceProducts = new ServiceProducts();
+        //Product product1 = new Product();
+        //product1 = serviceProducts.BuyProduct("Iphone",12);       
+        //cos.AddProductInBasket(product1);
+        //cos.ShowBasketProducts();
+
+
     }
 }
