@@ -28,6 +28,7 @@ namespace online_shop.Views
         {
             base.Meniu();
             Console.WriteLine("Apasati tasta 5 pentru a adauga produse in cos");
+            Console.WriteLine("Apasati tasta 6 pentru a afisa cosul de cumparaturi.");
         }
         public void AddProductsInBasket()
         {
@@ -41,12 +42,24 @@ namespace online_shop.Views
             if (_serviceProducts.BuyProduct(productName, qty) != null)
             {
                 product = _serviceProducts.BuyProduct(productName, qty);
+                product.SetStock(qty);
                 _cos.AddProductInBasket(product);
+                
             }
             else
                 Console.WriteLine("Cantitate indisponibila sau produs inexistent.");
+        
                                    
 
+        }
+        public void AccesBasket()
+        {
+            Console.WriteLine("|~~~~~~~YOUR BASKET~~~~~~~~|");
+                ViewCos viewCos = new ViewCos();
+                viewCos.Play();
+             
+            
+            
         }
         public void Play()
         {
@@ -77,6 +90,10 @@ namespace online_shop.Views
                         break;
                     case 5:
                         AddProductsInBasket();
+                        
+                        
+                        break;
+                    case 6:
                         _cos.ShowBasketProducts();
                         break;
                     default:
