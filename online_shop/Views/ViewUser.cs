@@ -10,10 +10,10 @@ namespace online_shop.Views
 {
     public class ViewUser
     {
-        private ServiceUser _serviceUser;
-        private ServiceOrders _serviceOrders;
-        private ServiceProducts _serviceProducts;
-        private ServiceOrderDetails _serviceOrderDetails;
+        protected ServiceUser _serviceUser;
+        protected ServiceOrders _serviceOrders;
+        protected ServiceProducts _serviceProducts;
+        protected ServiceOrderDetails _serviceOrderDetails;
 
         //User customer1 = new Customer("customer", 1, "customer1@mail", "123", "Flavius", "Sibiu Cisnadie Str Cetatii 46", 077771212);
 
@@ -44,37 +44,6 @@ namespace online_shop.Views
         }
 
 
-        public void Play()
-        {
-
-            bool running = true;
-
-            int alegere = 0;
-
-
-
-            while (running)
-            {
-                Meniu();
-
-                alegere = Int32.Parse(Console.ReadLine());
-
-
-                switch (alegere)
-                {
-                    case 1:
-                        ShowProducts();
-                        break;
-                    case 2:
-                        ShowOrderDetails();
-                        break;
-                  
-
-                    default:
-                        Console.WriteLine("Comanda invalida");
-                        break;
-                }
-            }
-        }
+       
     }
 }

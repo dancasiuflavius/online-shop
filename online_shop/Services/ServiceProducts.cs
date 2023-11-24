@@ -165,6 +165,17 @@ namespace online_shop.Services
             return list;
         }
 
+        public Product FindProductByName(String name)
+        {
+            for (int i = 0; i < _productsList.Count(); i++)
+            {
+                if (_productsList[i].GetProductName().Equals(name))
+                    return _productsList[i];
+            }
+
+            return null;
+        }
+
 
 
     }
