@@ -38,5 +38,9 @@ namespace online_shop.Models
             return base.ToString() + "\n" + "Status: " + _function + '\n';
 
         }
+        public override string ToSave()
+        {
+            return base.ToSave()+","+ _function;
+        }
     }
 }

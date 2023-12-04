@@ -40,6 +40,32 @@ namespace online_shop.DTO
                 if (_products[i].ID.Equals(id))
                     _products.Remove(_products[i]);
         }
+        public void RemoveProductByName(String name)
+        {
+            for (int i = 0; i < _products.Count; i++)
+                if (_products[i].Name.Equals(name))
+                    _products.Remove(_products[i]);
+        }
+        public void UpdateBasket(ProductDto product, int qty)
+        {
+            int pos = 0;
+            pos = FindPos(product);
+            
+            if (FindProduct(product) == true)
+            {
+                _products[pos].Qty += qty;
+            }
+            else
+                _products.Add(product);
+        }
+        public int FindPos(ProductDto product)
+        {
+            int pos = 0;
+            for (int i = 0; i < _products.Count; i++)
+                if (_products[i].Equals(product))
+                    pos = i;
+            return pos;
+        }
 
 
         public override string ToString()

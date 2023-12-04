@@ -89,6 +89,11 @@ namespace online_shop.Models
         }
 
 
+        public virtual string ToSave()
+        {
+
+            return _type +"," +_id + "," + _email + "," + _password;
+        }
 
     }
 }

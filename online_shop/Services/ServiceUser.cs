@@ -167,5 +167,45 @@ namespace online_shop.Services
 
             return text;
         }
+
+
+        public  String toSave()
+        {
+
+            String text = "";
+            int i = 0;
+            for (i = 0; i < _usersList.Count - 1; i++)
+            {
+
+                text += _usersList[i].ToSave() + "\n";
+            }
+
+            text += _usersList[i].ToSave();
+
+            return text;
+        }
+
+        public void SaveUser()
+        {
+            try
+            {
+
+                string filePath = GetDirectory();
+
+                // Create a StreamReader to read from the file
+                using (StreamWriter reader = new StreamWriter(filePath))
+                {
+                    // Read and process the file line by line
+                    
+                    reader.Write(toSave());
+
+                    reader.Close();
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred while reading the file: " + e.Message);
+            }
+        }
     }
 }

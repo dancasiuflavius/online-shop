@@ -75,7 +75,12 @@ namespace online_shop.Models
             return base.ToString()+"\n"+"Full Name: " + _fullName + '\n' + "Adress: " + _adress + '\n' + "Phone: " + _phone + '\n';
 
         }
-       
+
+        public override string ToSave()
+        {
+            return base.ToSave() +","+ _fullName + "," + _adress + ","  + _phone;
+        }
+
 
     }
 }

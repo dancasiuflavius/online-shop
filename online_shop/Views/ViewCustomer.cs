@@ -30,7 +30,9 @@ namespace online_shop.Views
         {
             base.Meniu();
             Console.WriteLine("Apasati tasta 5 pentru a adauga produse in cos");
-            Console.WriteLine("Apasati tasta 6 pentru a afisa cosul de cumparaturi.");
+            Console.WriteLine("Apasati tasta 6 pentru a sterge produse din cos.");
+            Console.WriteLine("Apasati tasta 7 pentru a modifica produse din cos.");
+            Console.WriteLine("Apasati tasta 8 pentru a afisa cosul de cumparaturi.");
 
         }
 
@@ -62,6 +64,12 @@ namespace online_shop.Views
                         AddProductsInBasket();
                         break;
                     case 6:
+                        RemoveProductFromBasket();
+                        break;
+                    case 7:
+                        UpdateBasket();
+                        break;
+                    case 8:
                         Console.WriteLine(this._cos);
                         break;
 
@@ -97,11 +105,49 @@ namespace online_shop.Views
             {
                 Console.WriteLine("Nu exista...................");
 
+            }          
+        }
+        public void RemoveProductFromBasket()
+        {
+            Console.WriteLine("Introduceti numele produsului.");
+            string productName = "";
+            productName = Console.ReadLine();
+            Product product = _serviceProducts.FindProductByName(productName);
+            if (product != null)
+            {
+                
+                this._cos.RemoveProductByName(productName);
+                Console.WriteLine("Produsul  a fost sters cu succes");
             }
+            else
+            {
+                Console.WriteLine("Nu exista...................");
 
-           
+            }
+        }
+        public void UpdateBasket()
+        {
+            Console.WriteLine("Introduceti numele produsului.");
+            string productName = "";
+            productName = Console.ReadLine();
+            Console.WriteLine("Introduceti cantitatea dorita.");
+            int qty = 0;
+            qty = Int32.Parse(Console.ReadLine());
 
 
+
+            Product product = _serviceProducts.FindProductByName(productName);
+            if (product != null)
+            {
+                ProductDto productDto = new ProductDto(product, qty);
+                this._cos.UpdateBasket(productDto,qty);
+                Console.WriteLine("Produsul  a fost modificat cu succes");
+            }
+            else
+            {
+                Console.WriteLine("Nu exista...................");
+
+            }
         }
 
 
