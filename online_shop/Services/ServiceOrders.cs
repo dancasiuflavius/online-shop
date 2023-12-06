@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using online_shop.DTO;
 using online_shop.Models;
+using online_shop.DTO;
 
 namespace online_shop.Services
 {
@@ -13,9 +15,12 @@ namespace online_shop.Services
 
         private String _filePath;
 
+        private Cos _shoppingCart;
+
         public ServiceOrders()
         {
             _ordersList = new List<Order>();
+            _shoppingCart = new Cos();
             _filePath = GetDirectory();
 
             this.ReadOrder();
@@ -92,7 +97,7 @@ namespace online_shop.Services
             }
             return false;
         }
-        public bool UpdateOrder(String id, String customerID, int ammount, String OrderStatus, String newId)
+        public bool UpdateOrder(String id, int customerID, int ammount, String OrderStatus, String newId)
         {
             for (int i = 0; i < _ordersList.Count; i++)
             {
@@ -107,5 +112,15 @@ namespace online_shop.Services
             }
             return false;
         }
+        //public Order CreateOrder(Customer customer, OrderDetails orderDetails)
+        //{
+        //    Order order = new Order();
+        //    order.SetOrderID(orderDetails.GetOrderID());
+        //    order.SetCustomerID(customer.GetID());
+        //    order.SetAmmount(orderDetails.GetPrice();
+            
+
+            
+        //}
     }
 }

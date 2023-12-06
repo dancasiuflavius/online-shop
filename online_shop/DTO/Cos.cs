@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace online_shop.DTO
 {
-    internal class Cos
+    public class Cos
     {
-        private List<ProductDto> _products;
+        public List<ProductDto> _products;
+        public Cos(List<ProductDto> products)
+        {
+            _products = products;
+        }
 
         public Cos()
         {

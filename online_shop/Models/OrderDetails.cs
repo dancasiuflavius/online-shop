@@ -86,5 +86,6 @@ namespace online_shop.Models
         {
             _quantity = quantity;
         }
+
     }
 }

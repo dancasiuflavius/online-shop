@@ -92,22 +92,22 @@ namespace online_shop.Services
                 }
             return user;
         }
-        public bool AddUser(User user)
-        {
-            switch (user)
-            {
-                case Customer customer when isUserById(customer.GetID()) == false: //Daca user este customer, modificam user in Customer, cautam in lista, daca e fals adaugam
-                    _usersList.Add(customer);
-                    return true;
+        //public bool AddUser(User user)
+        //{
+        //    switch (user)
+        //    {
+        //        case Customer customer when isUserById(customer.GetID()) == false: //Daca user este customer, modificam user in Customer, cautam in lista, daca e fals adaugam
+        //            _usersList.Add(customer);
+        //            return true;
 
-                case Admin admin when isUserById(admin.GetID()) == false:
-                    _usersList.Add(admin);
-                    return true;
+        //        case Admin admin when isUserById(admin.GetID()) == false:
+        //            _usersList.Add(admin);
+        //            return true;
 
-                default:
-                    return false;
-            }
-        }
+        //        default:
+        //            return false;
+        //    }
+        //}
         public bool RemoveUser(User user)
         {
             switch (user)

@@ -33,6 +33,9 @@ namespace online_shop.Views
             Console.WriteLine("Apasati tasta 6 pentru a sterge produse din cos.");
             Console.WriteLine("Apasati tasta 7 pentru a modifica produse din cos.");
             Console.WriteLine("Apasati tasta 8 pentru a afisa cosul de cumparaturi.");
+            Console.WriteLine("Apasati tasta 9 pentru a trimite comanda.");
+
+            
 
         }
 

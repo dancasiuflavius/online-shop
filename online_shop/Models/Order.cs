@@ -11,15 +11,16 @@ namespace online_shop.Models
     public class Order
     {
         private String _id;
-        private String _customerID;
+        private int _customerID;
         private int _ammount;
         private String _orderStatus;
-
+        
         public Order()
         {
 
         }
-        public Order(string id, string customerID, int ammount, string orderStatus)
+        
+        public Order(string id, int customerID, int ammount, string orderStatus)
         {
             _id = id;
             _customerID = customerID;
@@ -30,7 +31,7 @@ namespace online_shop.Models
         {
             string[] atribute = proprietati.Split(',');
             _id = atribute[0];
-            _customerID = atribute[1];
+            _customerID = Int32.Parse(atribute[1]);
             _ammount = Int32.Parse(atribute[2]);
             _orderStatus = atribute[3];
         }
@@ -43,7 +44,6 @@ namespace online_shop.Models
             text += "Order Status: " + _orderStatus + "\n";           
             return text;
         }
-
         public String GetOrderID()
         {
             return _id;
@@ -52,11 +52,11 @@ namespace online_shop.Models
         {
             _id = id;
         }
-        public String GetCustomerID()
+        public int GetCustomerID()
         {
             return _customerID;
         }
-        public void SetCustomerID(String customerID)
+        public void SetCustomerID(int customerID)
         {
             _customerID = customerID;
         }
@@ -76,5 +76,7 @@ namespace online_shop.Models
         {
             _orderStatus = orderStatus;
         }
+
+        
     }
 }
