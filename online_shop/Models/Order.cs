@@ -77,6 +77,13 @@ namespace online_shop.Models
             _orderStatus = orderStatus;
         }
 
+
+
+        public virtual string ToSave()
+        {
+            return _id + "," + _customerID + "," + _ammount + "," + _orderStatus;
+        }
+
         
     }
 }

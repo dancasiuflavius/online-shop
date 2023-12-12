@@ -97,5 +97,9 @@ namespace online_shop.Models
         {
             _stock = stock;
         }
+        public virtual string ToSave()
+        {
+            return _id + "," + _name + "," + _price + "," + _description + "," + _createDate + "," + _stock;
+        }
     }
 }

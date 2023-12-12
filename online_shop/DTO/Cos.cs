@@ -1,5 +1,8 @@
-﻿using System;
+﻿using online_shop.Models;
+using online_shop.Services;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +12,12 @@ namespace online_shop.DTO
     public class Cos
     {
         public List<ProductDto> _products;
-        public Cos(List<ProductDto> products)
+
+
+  
+
+         
+        private Cos(List<ProductDto> products)
         {
             _products = products;
         }
@@ -69,6 +77,26 @@ namespace online_shop.DTO
                 if (_products[i].Equals(product))
                     pos = i;
             return pos;
+        }
+
+
+        public CreateOrderRequest createOrder(ServiceOrders order,ServiceOrderDetails serviceOrderDetails, ServiceProducts serviceProd,Customer customer)
+        {
+            CreateOrderRequest request = new CreateOrderRequest();
+            request.Details = new List<OrderDetails>();
+            int total=0;
+            this._products.ForEach(x => {
+                total += x.TotalPrice;
+
+
+            });
+            request.order = new Order(order.NextID(), customer.GetID(), total, "created");
+            this._products.ForEach(x => {
+                request.Details.Add(new OrderDetails(serviceOrderDetails.NextID(),request.order.GetOrderID(),x.ID,x.TotalPrice,x.Qty));
+            });
+            serviceProd.UpdateStock(_products);
+            return request;
+
         }
 
 

@@ -68,7 +68,7 @@ namespace online_shop.Services
             for (int i = 0; i < _ordersList.Count; i++)
                 Console.WriteLine(_ordersList[i].GetOrderDescription());
         }
-        public bool FindOrderByID(Order order)
+        public bool FindOrder(Order order)
         {
             for (int i = 0; i < _ordersList.Count(); i++)
             {
@@ -77,9 +77,18 @@ namespace online_shop.Services
             }
             return false;
         }
+        public bool FindOrderByID(String orderId)
+        {
+            for (int i = 0; i < _ordersList.Count(); i++)
+            {
+                if (orderId.Equals(_ordersList[i].GetOrderID()))
+                    return true;
+            }
+            return false;
+        }
         public bool AddOrder(Order order)
         {
-            if (FindOrderByID(order) == true)
+            if (FindOrder(order) == true)
                 return false;
             else
                 _ordersList.Add(order);
@@ -118,9 +127,76 @@ namespace online_shop.Services
         //    order.SetOrderID(orderDetails.GetOrderID());
         //    order.SetCustomerID(customer.GetID());
         //    order.SetAmmount(orderDetails.GetPrice();
-            
 
-            
+
+
         //}
+        public String toSave()
+        {
+
+            String text = "";
+            int i = 0;
+            for (i = 0; i < _ordersList.Count - 1; i++)
+            {
+
+                text += _ordersList[i].ToSave() + "\n";
+            }
+
+            text += _ordersList[i].ToSave();
+
+            return text;
+        }
+
+        public void SaveOrder()
+        {
+            try
+            {
+
+                string filePath = GetDirectory();
+
+                // Create a StreamReader to read from the file
+                using (StreamWriter reader = new StreamWriter(filePath))
+                {
+                    // Read and process the file line by line
+
+                    reader.Write(toSave());
+
+                    reader.Close();
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred while reading the file: " + e.Message);
+            }
+        }
+        public string NextID()
+        {
+            Random rand = new Random();
+            String  id = "O" + rand.Next(1, 999);
+
+            while (FindOrderByID(id)==true)
+            {
+                id = "O" + rand.Next(1, 999);
+            }
+            return id;
+        }
+        public bool CancelOrder(Customer customer, String orderID)
+        {
+            for(int i=0;i<_ordersList.Count;i++)
+            {
+                if (_ordersList[i].GetOrderID().Equals(orderID) && customer.GetID().Equals(_ordersList[i].GetCustomerID()))
+                {
+                    _ordersList[i].SetOrderStatus("Declined");
+                    return true;
+
+                }
+                
+                    
+            }
+            return false;
+
+
+        }
+        
     }
 }

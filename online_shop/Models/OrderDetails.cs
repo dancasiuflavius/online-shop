@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,11 @@ namespace online_shop.Models
         public void SetQuantity(int quantity)
         {
             _quantity = quantity;
+        }
+        public virtual string ToSave()
+        {
+
+            return _id + "," + _order_id + "," + _product_id + "," + _price + "," + _quantity;
         }
 
     }

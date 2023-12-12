@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using online_shop.DTO;
 using online_shop.Models;
 
 namespace online_shop.Services
@@ -63,7 +65,7 @@ namespace online_shop.Services
             for (int i = 0; i < _productsList.Count; i++)
                 Console.WriteLine(_productsList[i].GetProductDescription());
         }
-        public void ShowProducts(List<Product> products )
+        public void ShowProducts(List<Product> products)
         {
             for (int i = 0; i < products.Count; i++)
                 Console.WriteLine(products[i].GetProductDescription());
@@ -72,7 +74,7 @@ namespace online_shop.Services
         {
             List<Product> aux = new List<Product>();
             for (int i = 0; i < _productsList.Count; i++)
-                    aux.Add(_productsList[i]);
+                aux.Add(_productsList[i]);
             return aux;
 
         }
@@ -85,6 +87,17 @@ namespace online_shop.Services
             }
 
             return false;
+        }
+
+        public Product FindProductByID(String productId)
+        {
+            for (int i = 0; i < _productsList.Count(); i++)
+            {
+                if (productId.Equals(_productsList[i].GetProductID()))
+                    return _productsList[i];
+            }
+
+            return null;
         }
         public bool AddProduct(Product product)
         {
@@ -126,19 +139,19 @@ namespace online_shop.Services
         public List<Product> AscendingSortByPrice(List<Product> _productList)
         {
             Product aux = new Product();
-           
+
             for (int i = 0; i < _productList.Count; i++)
             {
                 for (int j = 0; j < _productList.Count; j++)
                     if (_productList[i].GetPrice() < _productList[j].GetPrice())
                     {
-                        aux=_productList[i];
-                        _productList[i]=_productList[j];
-                        _productList[j]=aux;                     
+                        aux = _productList[i];
+                        _productList[i] = _productList[j];
+                        _productList[j] = aux;
                     }
             }
             return _productList;
-           
+
 
         }
         public List<Product> DescendingSortByPrice(List<Product> _productList)
@@ -177,6 +190,79 @@ namespace online_shop.Services
         }
 
 
+        public void UpdateStock(List<ProductDto> productDtos)
+        {
+
+
+            productDtos.ForEach(x =>
+            {
+
+
+                Product product = FindProductByID(x.ID);
+                product.SetStock(product.GetStock() - x.Qty);
+
+            });
+        }
+        public void UpdateStock(List<OrderDetails> orderDetails)
+        {
+
+
+            orderDetails.ForEach(x =>
+            {
+
+                Product product = FindProductByID(x.GetProductID());
+                product.SetStock(product.GetStock() + x.GetQuantity());
+
+            });
+        }
+
+        public string ConvertProductIDIntoName(string productID)
+        {
+            string name = "";
+            for (int i = 0; i < _productsList.Count(); i++)
+                if (_productsList[i].GetProductID().Equals(productID))
+                    name = _productsList[i].GetProductName();
+            return name;
+
+        }
+        public String toSave()
+        {
+
+            String text = "";
+            int i = 0;
+            for (i = 0; i < _productsList.Count - 1; i++)
+            {
+
+                text += _productsList[i].ToSave() + "\n";
+            }
+
+            text += _productsList[i].ToSave();
+
+            return text;
+        }
+
+        public void SaveProduct()
+        {
+            try
+            {
+
+                string filePath = GetDirectory();
+
+                // Create a StreamReader to read from the file
+                using (StreamWriter reader = new StreamWriter(filePath))
+                {
+                    // Read and process the file line by line
+
+                    reader.Write(toSave());
+
+                    reader.Close();
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred while reading the file: " + e.Message);
+            }
+        }
 
     }
 }
