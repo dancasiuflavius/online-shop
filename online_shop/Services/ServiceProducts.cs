@@ -99,6 +99,16 @@ namespace online_shop.Services
 
             return null;
         }
+        public bool FindProductByID2(String productId)
+        {
+            for (int i = 0; i < _productsList.Count(); i++)
+            {
+                if (productId.Equals(_productsList[i].GetProductID()))
+                    return true;
+            }
+
+            return false;
+        }
         public bool AddProduct(Product product)
         {
             if (FindProductByID(product) == true)
@@ -262,6 +272,19 @@ namespace online_shop.Services
             {
                 Console.WriteLine("An error occurred while reading the file: " + e.Message);
             }
+        }
+
+        public string NextID()
+        {
+            Random rand = new Random();
+            String id = "P" + rand.Next(1, 999);
+
+            while (FindProductByID2(id) == true)
+            {
+                id = "P" + rand.Next(1, 999);
+            }
+            return id;
+
         }
 
     }

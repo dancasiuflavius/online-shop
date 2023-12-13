@@ -43,7 +43,7 @@ internal class Program
         //_serviceUser.UpdateUser(new online_shop.DTO.UpdateUser {id=5, type = "admin", newMail = "yahoo.com", newAdress = "Sibiu", newFullName = "Flavius Dancasiu", newPasword = "xtzu", newPhone = 077777777, newFunction = "high permission"});
         //Console.WriteLine( _serviceUser.ToString());
 
-        ViewCustomer viewUser = new ViewCustomer();
+        ViewAdmin viewUser = new ViewAdmin();
         viewUser.Play();
 
         //ServiceOrderDetails oD = new ServiceOrderDetails();

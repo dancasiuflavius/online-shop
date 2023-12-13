@@ -33,7 +33,36 @@ namespace online_shop.Views
             Console.WriteLine("Apasati tasta 2 pentru a afisa detaliile comenzii");
                   
         }
+        public void Play()
+        {
 
+            bool running = true;
+
+            int alegere = 0;
+
+
+
+            while (running)
+            {
+                Meniu();
+
+                alegere = Int32.Parse(Console.ReadLine());
+
+
+                switch (alegere)
+                {
+                    case 1:
+                        ShowProducts();
+                        break;
+                    case 2:
+                        ShowOrderDetails();
+                        break;
+                    default:
+                        Console.WriteLine("Comanda invalida");
+                        break;
+                }
+            }
+        }
         public void ShowProducts()
         {
             _serviceProducts.ShowProducts();
