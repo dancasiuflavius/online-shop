@@ -1,6 +1,8 @@
 ﻿using online_shop.DTO;
 using online_shop.Models;
+using online_shop.Products.Model;
 using online_shop.Services;
+using online_shop.Users.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using online_shop.DTO;
 using online_shop.Models;
 using online_shop.DTO;
+using online_shop.Users.Models;
 
 namespace online_shop.Services
 {

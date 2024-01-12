@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace online_shop.Models
+namespace online_shop.Users.Models
 {
     public class User
     {
@@ -19,18 +19,18 @@ namespace online_shop.Models
         }
         public User(string type, int id, string email, string password)
         {
-            this._type = type;
-            this._id = id;            
-            this._email = email;
-            this._password = password;
+            _type = type;
+            _id = id;
+            _email = email;
+            _password = password;
         }
-        public User(String proprietati)
+        public User(string proprietati)
         {
             string[] atribute = proprietati.Split(',');
             _type = atribute[0];
-            _id = Int32.Parse(atribute[1]);
+            _id = int.Parse(atribute[1]);
             _email = atribute[2];
-            _password = atribute[3];           
+            _password = atribute[3];
         }
         //public virtual String Description()
         //{
@@ -47,7 +47,7 @@ namespace online_shop.Models
         }
         public void SetType(string type)
         {
-            this._type = type;
+            _type = type;
         }
         public int GetID()
         {
@@ -55,15 +55,15 @@ namespace online_shop.Models
         }
         public void SetID(int id)
         {
-            this._id = id;
-        }      
+            _id = id;
+        }
         public string GetEmail()
         {
             return _email;
         }
         public void SetEmail(string email)
         {
-            this._email = email;
+            _email = email;
         }
         public string GetPassword()
         {
@@ -71,7 +71,7 @@ namespace online_shop.Models
         }
         public void SetPassword(string password)
         {
-            this._password = password;
+            _password = password;
         }
 
         public override string ToString()
@@ -84,7 +84,7 @@ namespace online_shop.Models
             User user = obj as User;
 
 
-            return this._email.Equals(user._email);
+            return _email.Equals(user._email);
 
         }
 
@@ -92,7 +92,7 @@ namespace online_shop.Models
         public virtual string ToSave()
         {
 
-            return _type +"," +_id + "," + _email + "," + _password;
+            return _type + "," + _id + "," + _email + "," + _password;
         }
 
     }

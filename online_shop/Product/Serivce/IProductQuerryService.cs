@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using online_shop.DTO;
-using online_shop.Models;
 
-namespace online_shop.Services
+namespace online_shop.Products.Serivce
 {
-    public class ServiceAdmin : ServiceUser
+    public interface IProductQuerryService
     {
 
     }

@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using online_shop.Users.Models;
 
 namespace online_shop.Models
 {

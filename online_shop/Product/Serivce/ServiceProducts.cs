@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using online_shop.DTO;
+﻿using online_shop.DTO;
 using online_shop.Models;
+using online_shop.Products.Model;
 
-namespace online_shop.Services
+namespace online_shop.Products.Serivce
 {
     public class ServiceProducts
     {
         private List<Product> _productsList;
 
-        private String _filePath;
+        private string _filePath;
 
         public ServiceProducts()
         {
             _productsList = new List<Product>();
             _filePath = GetDirectory();
 
-            this.ReadProduct();
+            ReadProduct();
         }
         public ServiceProducts(List<Product> products)
         {
@@ -89,7 +84,7 @@ namespace online_shop.Services
             return false;
         }
 
-        public Product FindProductByID(String productId)
+        public Product FindProductByID(string productId)
         {
             for (int i = 0; i < _productsList.Count(); i++)
             {
@@ -99,7 +94,7 @@ namespace online_shop.Services
 
             return null;
         }
-        public bool FindProductByID2(String productId)
+        public bool FindProductByID2(string productId)
         {
             for (int i = 0; i < _productsList.Count(); i++)
             {
@@ -117,7 +112,7 @@ namespace online_shop.Services
                 _productsList.Add(product);
             return true;
         }
-        public bool RemoveProduct(String id)
+        public bool RemoveProduct(string id)
         {
             for (int i = 0; i < _productsList.Count; i++)
             {
@@ -129,7 +124,7 @@ namespace online_shop.Services
             }
             return false;
         }
-        public bool UpdateProduct(String id, String name, int price, String description, DateTime createDate, int stock, String newId)
+        public bool UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId)
         {
             for (int i = 0; i < _productsList.Count; i++)
             {
@@ -188,7 +183,7 @@ namespace online_shop.Services
             return list;
         }
 
-        public Product FindProductByName(String name)
+        public Product FindProductByName(string name)
         {
             for (int i = 0; i < _productsList.Count(); i++)
             {
@@ -235,10 +230,10 @@ namespace online_shop.Services
             return name;
 
         }
-        public String toSave()
+        public string toSave()
         {
 
-            String text = "";
+            string text = "";
             int i = 0;
             for (i = 0; i < _productsList.Count - 1; i++)
             {
@@ -277,7 +272,7 @@ namespace online_shop.Services
         public string NextID()
         {
             Random rand = new Random();
-            String id = "P" + rand.Next(1, 999);
+            string id = "P" + rand.Next(1, 999);
 
             while (FindProductByID2(id) == true)
             {

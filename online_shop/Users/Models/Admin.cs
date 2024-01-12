@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace online_shop.Models
+namespace online_shop.Users.Models
 {
     public class Admin : User
     {
@@ -14,11 +14,11 @@ namespace online_shop.Models
         {
 
         }
-        public Admin(string type, int id, string email, string password, string function) :base(type,id,email,password)
+        public Admin(string type, int id, string email, string password, string function) : base(type, id, email, password)
         {
-            this._function = function;
+            _function = function;
         }
-        public Admin(String proprietati) : base(proprietati)
+        public Admin(string proprietati) : base(proprietati)
         {
             string[] atribute = proprietati.Split(',');
 
@@ -26,11 +26,11 @@ namespace online_shop.Models
         }
         public string GetFunction()
         {
-            return this._function;
+            return _function;
         }
         public void SetFunction(string function)
         {
-            this._function = function;
+            _function = function;
         }
         public override string ToString()
         {
@@ -40,7 +40,7 @@ namespace online_shop.Models
         }
         public override string ToSave()
         {
-            return base.ToSave()+","+ _function;
+            return base.ToSave() + "," + _function;
         }
     }
 }

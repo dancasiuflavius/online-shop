@@ -1,5 +1,6 @@
 ﻿using online_shop.Models;
-using online_shop.Services;
+using online_shop.Users.Models;
+using online_shop.Users.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;

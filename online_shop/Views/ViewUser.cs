@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using online_shop.Models;
+﻿using online_shop.Products.Serivce;
 using online_shop.Services;
+using online_shop.Users.Service;
 
 namespace online_shop.Views
 {

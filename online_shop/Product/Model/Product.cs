@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace online_shop.Models
+namespace online_shop.Products.Model
 {
     public class Product
     {
-        private String _id;
-        private String _name;
+        private string _id;
+        private string _name;
         private int _price;
-        private String _description;
+        private string _description;
         private DateTime _createDate;
         private int _stock;
 
         public Product()
         {
-            
+
         }
-        public Product(string id, string name, int price, string description,String createDate, int stock)
+        public Product(string id, string name, int price, string description, string createDate, int stock)
         {
             _id = id;
             _name = name;
@@ -28,56 +28,56 @@ namespace online_shop.Models
             _createDate = DateTime.Parse(createDate);
             _stock = stock;
         }
-        public Product(String proprietati)
-        {         
+        public Product(string proprietati)
+        {
             string[] atribute = proprietati.Split(',');
             _id = atribute[0];
             _name = atribute[1];
-            _price = Int32.Parse(atribute[2]);
+            _price = int.Parse(atribute[2]);
             _description = atribute[3];
             _createDate = DateTime.Parse(atribute[4]);
-            _stock = Int32.Parse(atribute[5]);
+            _stock = int.Parse(atribute[5]);
         }
-        public String GetProductDescription()
+        public string GetProductDescription()
         {
-            String text = "";
-            text += "ID: " + _id + "\n"; 
+            string text = "";
+            text += "ID: " + _id + "\n";
             text += "Name: " + _name + "\n";
             text += "Price: " + _price + "$" + "\n";
             text += "Description: " + _description + "\n";
-            text += "Creation Date: " + _createDate + "\n"; 
-            text += "Stock: " + _stock + " pcs "  + "\n";
+            text += "Creation Date: " + _createDate + "\n";
+            text += "Stock: " + _stock + " pcs " + "\n";
             return text;
         }
-        public String GetProductID()
+        public string GetProductID()
         {
-            return this._id;
+            return _id;
         }
-        public void SetProductID(String id)
+        public void SetProductID(string id)
         {
             _id = id;
         }
-        public String GetProductName()
+        public string GetProductName()
         {
-            return this._name;
+            return _name;
         }
-        public void SetProductName(String name)
+        public void SetProductName(string name)
         {
             _name = name;
         }
         public int GetPrice()
         {
-            return this._price;
+            return _price;
         }
         public void SetPrice(int price)
         {
             _price = price;
         }
-        public String GetDescription()
+        public string GetDescription()
         {
             return _description;
         }
-        public void SetDescription(String description)
+        public void SetDescription(string description)
         {
             _description = description;
         }
@@ -91,7 +91,7 @@ namespace online_shop.Models
         }
         public int GetStock()
         {
-            return this._stock;
+            return _stock;
         }
         public void SetStock(int stock)
         {

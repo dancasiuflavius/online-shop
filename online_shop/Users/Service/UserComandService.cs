@@ -1,28 +1,28 @@
-﻿using System;
+﻿using online_shop.DTO;
+using online_shop.Models;
+using online_shop.Users.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using online_shop.DTO;
-using online_shop.Models;
 
-namespace online_shop.Services
+namespace online_shop.Users.Service
 {
-    public class ServiceUser
+    public class UserComandService : IUserComandService
     {
         private List<User> _usersList;
 
-        private String _filePath;
+        private string _filePath;
 
-        public ServiceUser()
+        public UserComandService()
         {
             _usersList = new List<User>();
             _filePath = GetDirectory();
 
-            this.ReadUser();
+            ReadUser();
         }
-        public ServiceUser(List<User> users)
+        public UserComandService(List<User> users)
         {
             _usersList = users;
 
@@ -56,10 +56,10 @@ namespace online_shop.Services
 
 
                             case "customer":
-                                this._usersList.Add(new Customer(line));
+                                _usersList.Add(new Customer(line));
                                 break;
                             case "admin":
-                                this._usersList.Add(new Admin(line));
+                                _usersList.Add(new Admin(line));
                                 break;
                             default:
                                 Console.WriteLine("eroare citire fisier");
@@ -74,15 +74,14 @@ namespace online_shop.Services
                 Console.WriteLine("An error occurred while reading the file: " + e.Message);
             }
         }
-
-        public bool isUserById(int id)
+        private bool isUserById(int id)
         {
             for (int i = 0; i < _usersList.Count; i++)
                 if (_usersList[i].GetID() == id)
                     return true;
             return false;
         }
-        public User findUserById(int id)
+        private User findUserById(int id)
         {
             User user = null;
             for (int i = 0; i < _usersList.Count; i++)
@@ -112,7 +111,7 @@ namespace online_shop.Services
         {
             switch (user)
             {
-                case Customer customer when isUserById(customer.GetID()) == true: 
+                case Customer customer when isUserById(customer.GetID()) == true:
                     _usersList.Remove(customer);
                     return true;
 
@@ -130,13 +129,13 @@ namespace online_shop.Services
             switch (user.type)
             {
                 case "customer":
-                    Customer customer=findUserById(user.id) as Customer;
+                    Customer customer = findUserById(user.id) as Customer;
                     customer.SetPhone(user.newPhone);
                     customer.SetEmail(user.newMail);
                     customer.SetPassword(user.newPasword);
                     customer.SetAdress(user.newAdress);
                     customer.SetFullName(user.newFullName);
-                   
+
                     return true;
 
                 case "admin":
@@ -144,7 +143,7 @@ namespace online_shop.Services
                     admin.SetFunction(user.newFunction);
                     admin.SetEmail(user.newMail);
                     admin.SetPassword(user.newPasword);
-                                     
+
                     return true;
 
 
@@ -152,27 +151,32 @@ namespace online_shop.Services
                     return false;
             }
         }
-
-
-        public override string ToString()
+        public void SaveUser()
         {
-
-            String text = "";
-
-            for(int i=0;i< _usersList.Count; i++)
+            try
             {
-                text += _usersList[i].ToString() + "\n";
 
+                string filePath = GetDirectory();
+
+                // Create a StreamReader to read from the file
+                using (StreamWriter reader = new StreamWriter(filePath))
+                {
+                    // Read and process the file line by line
+
+                    reader.Write(toSave());
+
+                    reader.Close();
+                }
             }
-
-            return text;
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred while reading the file: " + e.Message);
+            }
         }
-
-
-        public  String toSave()
+        private string toSave()
         {
 
-            String text = "";
+            string text = "";
             int i = 0;
             for (i = 0; i < _usersList.Count - 1; i++)
             {
@@ -185,27 +189,6 @@ namespace online_shop.Services
             return text;
         }
 
-        public void SaveUser()
-        {
-            try
-            {
-
-                string filePath = GetDirectory();
-
-                // Create a StreamReader to read from the file
-                using (StreamWriter reader = new StreamWriter(filePath))
-                {
-                    // Read and process the file line by line
-                    
-                    reader.Write(toSave());
-
-                    reader.Close();
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("An error occurred while reading the file: " + e.Message);
-            }
-        }
+        
     }
 }
