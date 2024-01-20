@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace online_shop.Models
+namespace online_shop.OrderDetail
 {
     public class OrderDetails
     {

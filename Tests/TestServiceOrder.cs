@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using online_shop.Models;
-using online_shop.Services;
+using online_shop.Services.Models;
 
 namespace Tests
 {

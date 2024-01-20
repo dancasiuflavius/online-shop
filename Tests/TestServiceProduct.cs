@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using online_shop.Models;
-using online_shop.Product.Model;
-using online_shop.Product.Serivce;
+using online_shop.Products.Model;
+using online_shop.Products.Serivce;
 
 namespace Tests
 {

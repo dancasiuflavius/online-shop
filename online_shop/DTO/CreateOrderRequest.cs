@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace online_shop.DTO
+namespace online_shop.OrderDetail
 {
     public class CreateOrderRequest
     {
 
-         public List<OrderDetails> Details { get; set; }
+        public List<OrderDetails> Details { get; set; }
 
         public Order order { get; set; } 
     }

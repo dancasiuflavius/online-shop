@@ -1,6 +1,9 @@
 ﻿using online_shop.DTO;
 using online_shop.Models;
+using online_shop.OrderDetail;
+using online_shop.Orders.Service;
 using online_shop.Products.Model;
+using online_shop.Products.Serivce;
 using online_shop.Services;
 using online_shop.Users.Models;
 using System;
@@ -11,38 +14,43 @@ using System.Threading.Tasks;
 
 namespace online_shop.Views
 {
-    public class ViewCustomer : ViewUser
+    public class ViewCustomer
     {
 
+        private Customer _customer;
+        private Cos _basket;
+        private CreateOrderRequest _order;
+        private IProductComandService _productComandService;
+        private IProductQuerryService _productQuerryService;
+        private IOrderDetailsComandService _orderDetailsComandService;
+        private IOrderDetailsQuerryService _orderDetailsQuerryService;
+        private IOrderComandService _orderComandService;
+        private IOrderQuerryService _orderQuerryService;
 
-
-        private Cos _cos;
-        private Customer customer;
 
         public ViewCustomer()
         {
+           
+            _productComandService = ProductComandServiceSingleton.Instance;
+            _productQuerryService = ProductQuerryServiceSingleton.Instance;
+            _basket= new Cos();
+            
+            _customer = new Customer("customer", 1, "customer1@mail", "123", "Flavius", "Sibiu Cisnadie Str Cetatii 46", 77771212);
 
-            _cos = new Cos();
-            customer = new Customer("customer", 1, "customer1@mail", "123", "Flavius", "Sibiu Cisnadie Str Cetatii 46", 077771212);
         }
-
-
-
         public void Meniu()
         {
-            base.Meniu();
-            Console.WriteLine("Apasati tasta 5 pentru a adauga produse in cos");
-            Console.WriteLine("Apasati tasta 6 pentru a sterge produse din cos.");
-            Console.WriteLine("Apasati tasta 7 pentru a modifica produse din cos.");
-            Console.WriteLine("Apasati tasta 8 pentru a afisa cosul de cumparaturi.");
-            Console.WriteLine("Apasati tasta 9 pentru a trimite comanda.");
-            Console.WriteLine("Apasati tasta 10 pentru a anula o comanda.");
-            Console.WriteLine("Apasati tasta 11 pentru a afisa detalii despre comanda.");
-
+            Console.WriteLine("Apasati tasta 1 pentru a afisa lista de produse.");
+            Console.WriteLine("Apasati tasta 2 pentru a adauga produse in cos");
+            Console.WriteLine("Apasati tasta 3 pentru a sterge produse din cos.");
+            Console.WriteLine("Apasati tasta 4 pentru a modifica produse din cos.");
+            Console.WriteLine("Apasati tasta 5 pentru a afisa cosul de cumparaturi.");
+            Console.WriteLine("Apasati tasta 6 pentru a trimite comanda.");
+            Console.WriteLine("Apasati tasta 7 pentru a anula o comanda.");
+            Console.WriteLine("Apasati tasta 8 pentru a afisa detalii despre comanda.");
 
 
         }
-
         public void Play()
         {
 
@@ -65,28 +73,19 @@ namespace online_shop.Views
                         ShowProducts();
                         break;
                     case 2:
-                        ShowOrderDetails();
-                        break;
-                    case 5:
                         AddProductsInBasket();
                         break;
-                    case 6:
-                        RemoveProductFromBasket();
+                    case 3:
+                        RemoveProductsFromBasket();
                         break;
-                    case 7:
+                    case 4:
                         UpdateBasket();
                         break;
-                    case 8:
-                        Console.WriteLine(this._cos);
+                     case 5:
+                        Console.WriteLine(this._basket);
                         break;
-                    case 9:
+                    case 6:
                         SendOrder();
-                        break;
-                    case 10:
-                        CancelOrder();
-                        break;
-                    case 11:
-                        ShowOrderDetails();
                         break;
                     default:
                         Console.WriteLine("Comanda invalida");
@@ -94,9 +93,10 @@ namespace online_shop.Views
                 }
             }
         }
-
-
-
+        public void ShowProducts()
+        {
+            _productQuerryService.ShowProducts();
+        }     
         public void AddProductsInBasket()
         {
             Console.WriteLine("Introduceti numele produsului.");
@@ -108,11 +108,11 @@ namespace online_shop.Views
 
 
 
-            Product product = _serviceProducts.FindProductByName(productName);
+            Product product = _productQuerryService.FindProductByName(productName);
             if (product != null)
             {
                 ProductDto productDto = new ProductDto(product, qty);
-                this._cos.AddProduct(productDto);
+                this._basket.AddProduct(productDto);
                 Console.WriteLine("Produsul  a fost adaugat cu succes");
             }
             else
@@ -121,16 +121,16 @@ namespace online_shop.Views
 
             }
         }
-        public void RemoveProductFromBasket()
+        public void RemoveProductsFromBasket()
         {
             Console.WriteLine("Introduceti numele produsului.");
             string productName = "";
             productName = Console.ReadLine();
-            Product product = _serviceProducts.FindProductByName(productName);
+            Product product = _productQuerryService.FindProductByName(productName);
             if (product != null)
             {
 
-                this._cos.RemoveProductByName(productName);
+                this._basket.RemoveProductByName(productName);
                 Console.WriteLine("Produsul  a fost sters cu succes");
             }
             else
@@ -150,11 +150,11 @@ namespace online_shop.Views
 
 
 
-            Product product = _serviceProducts.FindProductByName(productName);
+            Product product = _productQuerryService.FindProductByName(productName);
             if (product != null)
             {
                 ProductDto productDto = new ProductDto(product, qty);
-                this._cos.UpdateBasket(productDto, qty);
+                this._basket.UpdateBasket(productDto, qty);
                 Console.WriteLine("Produsul  a fost modificat cu succes");
             }
             else
@@ -165,51 +165,20 @@ namespace online_shop.Views
         }
         public void SendOrder()
         {
-            CreateOrderRequest request = this._cos.createOrder(_serviceOrders, _serviceOrderDetails, _serviceProducts,customer);
-            _serviceOrders.AddOrder(request.order);
+            CreateOrderRequest request = this._basket.createOrder(_customer);
+            _orderComandService.AddOrder(request.order);
             request.Details.ForEach(x =>
             {
 
-                _serviceOrderDetails.AddOrderDetails(x);
+                _orderDetailsComandService.AddOrderDetails(x);
             });
-            request.order.SetOrderStatus("done");
-            _serviceOrderDetails.SaveOrderDetails();
-            _serviceOrders.SaveOrder();
-            _serviceProducts.SaveProduct();
+            request.order.SetOrderStatus("Done");
+            _orderDetailsComandService.SaveOrderDetails();
+            _orderComandService.SaveOrder();
+            _productComandService.SaveProduct();
 
-            Console.WriteLine("Comanda cu ID-ul: " + request.order.GetOrderID() +" a fost trimisa.");
+            Console.WriteLine("Comanda cu ID-ul: " + request.order.GetOrderID() + " a fost trimisa.");
         }
-        public void CancelOrder()
-        {
-            Console.WriteLine("Introduceti ID-ul comenzii");
-            String orderID = "";
-            orderID = Console.ReadLine();
-            if (_serviceOrders.CancelOrder(customer, orderID) == true)
-                Console.WriteLine("Comanda cu ID-ul: " + orderID + " a fost anulata cu succes!");
-            else
-                Console.WriteLine("Nu puteti anula o comanda inexistenta/care nu va apartine.");
-            List<OrderDetails> orderDetails = _serviceOrderDetails.GetOrderDetailsByOrderID(orderID);
-            _serviceProducts.UpdateStock(orderDetails);
-
-
-
-            _serviceProducts.SaveProduct();
-            _serviceOrders.SaveOrder(); 
-         
-          
-        }
-        public void ShowOrderDetails()
-        {
-
-            Console.WriteLine("Introduceti ID-ul comenzii");
-            String orderID = "";
-            orderID = Console.ReadLine();
-            //List<OrderDetails> orderDetails = _serviceOrderDetails.GetOrderDetailsByOrderID(orderID);
-            _serviceOrderDetails.ShowOrderDetails2(orderID);
-            
-        }
-
-
 
     }
 }

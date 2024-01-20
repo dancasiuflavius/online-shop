@@ -3,60 +3,40 @@ using online_shop.Services;
 using System.ComponentModel.Design;
 using System.Numerics;
 using online_shop.Views;
+using online_shop.OrderDetail;
+using online_shop.Orders;
+using online_shop.Orders.Service;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        //ServiceUser _serviceUser = new ServiceUser();
-        //Console.WriteLine( _serviceUser.ToString());
+        //List<OrderDetails> odList = new List<OrderDetails>();
+        //OrderDetails od1 = new OrderDetails("OD982", "O877", "P1", 12000, 10);
+        //OrderDetails od2 = new OrderDetails("OD976", "O922", "P1", 12000, 10);
+        //odList.Add(od1);
+        //odList.Add(od2);
+        //OrderDetailsComandService _odComandService = new OrderDetailsComandService(odList);
+        //Console.WriteLine(_odComandService.FindOrderDetailsByID("O922"));
+        //Console.WriteLine(_odComandService.AddOrderDetails(od1));
+        //Console.WriteLine(_odComandService.RemoveOrderDetails("O877"));
+        //Console.WriteLine(_odComandService.UpdateOrderDetails("O871", "CCC", "P3", 25, 10, "N2"));
 
-        //User user = new Customer("customer", 100, "customer1@mail", "123", "ZZZ", "Bucuresti", 077771212);
-        //User user1 = new Customer("customer", 252, "customer2@mail", "123", "YYY", "Timisoara", 077771212);
-        //User user3 = new Admin("admin", 444, "admin@mail", "qwer1324", "lowest permission");
+        //List<Order> orderList = new List<Order>();
+        //Order order = new Order("O1",100,5,"delivered");
+        //Order order1 = new Order("O2", 252, 4, "declined");
 
-        //_serviceUser.AddUser(user);
-        //_serviceUser.AddUser(user1);
-        //_serviceUser.AddUser(user3);
+        //orderList.Add(order1);
+        //orderList.Add(order);
 
-        //_serviceUser.SaveUser();
+        //OrderComandService _oComandService = new OrderComandService(orderList);
+        //Console.WriteLine(_oComandService.AddOrder(order));
+        //Console.WriteLine(_oComandService.RemoveOrder("O1"));
+        //Console.WriteLine(_oComandService.UpdateOrder("O1", 12, 5, "declined", "O44"));
+        //OrderQuerryService _oQService = new OrderQuerryService(orderList);
+        //Console.WriteLine(_oQService.FindOrderByID("O3"));
 
-        //ServiceOrderDetails _srvOrder = new ServiceOrderDetails();
-
-        OrderDetails order = new OrderDetails("OD3", "O5", "P154", 2000, 3);
-        //OrderDetails oder1 = new OrderDetails("OD5", "O35", "P212", 500, 3);
-        //_srvOrder.AddOrderDetails(order);
-        //_srvOrder.AddOrderDetails(oder1);
-
-        //_srvOrder.SaveOrderDetails();
-
-        //ServiceOrderDetails srvOrd = new ServiceOrderDetails();
-
-        //string id = "";
-
-        //id = srvOrd.NextID();
-
-        //Console.WriteLine(id);
-
-        //Console.WriteLine(_serviceUser.RemoveUser(user3));
-
-        //_serviceUser.UpdateUser(new online_shop.DTO.UpdateUser {id=5, type = "admin", newMail = "yahoo.com", newAdress = "Sibiu", newFullName = "Flavius Dancasiu", newPasword = "xtzu", newPhone = 077777777, newFunction = "high permission"});
-        //Console.WriteLine( _serviceUser.ToString());
-
-        ViewLogin viewUser = new ViewLogin();
-        viewUser.Play();
-
-        //ServiceOrderDetails oD = new ServiceOrderDetails();
-        //oD.ShowOrderDetails();
-       // ServiceOrderDetails OD = new ServiceOrderDetails();
-        //List<OrderDetails> orders = new List<OrderDetails>();
-        //orders.Add(OD.GetOrderDetailsByOrderID(order.GetID()));
-        //orders.Add(order);
-        //orders.Add(oder1);
-        //OD.ShowOrderDetails2(orders, order.GetID());
-
-
-        //ServiceOrders orders = new ServiceOrders();
-        //orders.ShowOrders();
+        ViewCustomer view = new ViewCustomer();
+        view.Play();
     }
 }

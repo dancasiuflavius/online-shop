@@ -1,26 +1,27 @@
-﻿using System;
+﻿using online_shop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using online_shop.Models;
 
-namespace online_shop.Services
+
+namespace online_shop.OrderDetail
 {
-    public class ServiceOrderDetails
+    public class OrderDetailsComandService : IOrderDetailsComandService
     {
-        private List<OrderDetails> _ordersDetailsList;
+        private readonly List<OrderDetails> _ordersDetailsList;
 
-        private String _filePath;
+        private string _filePath;
 
-        public ServiceOrderDetails()
+        public OrderDetailsComandService()
         {
             _ordersDetailsList = new List<OrderDetails>();
             _filePath = GetDirectory();
 
-            this.ReadOrderDetails();
+            ReadOrderDetails();
         }
-        public ServiceOrderDetails(List<OrderDetails> orderDetails)
+        public OrderDetailsComandService(List<OrderDetails> orderDetails)
         {
             _ordersDetailsList = orderDetails;
 
@@ -89,7 +90,7 @@ namespace online_shop.Services
                 _ordersDetailsList.Add(orderDetails);
             return true;
         }
-        public bool RemoveOrderDetails(String id)
+        public bool RemoveOrderDetails(string id)
         {
             for (int i = 0; i < _ordersDetailsList.Count; i++)
             {
@@ -101,7 +102,7 @@ namespace online_shop.Services
             }
             return false;
         }
-        public bool UpdateOrderDetails(String id, String order_Id, String product_id, int price, int qty, String newId)
+        public bool UpdateOrderDetails(string id, string order_Id, string product_id, int price, int qty, string newId)
         {
             for (int i = 0; i < _ordersDetailsList.Count; i++)
             {
@@ -117,10 +118,10 @@ namespace online_shop.Services
             }
             return false;
         }
-        public String toSave()
+        private string toSave()
         {
 
-            String text = "";
+            string text = "";
             int i = 0;
             for (i = 0; i < _ordersDetailsList.Count - 1; i++)
             {
@@ -155,52 +156,5 @@ namespace online_shop.Services
                 Console.WriteLine("An error occurred while reading the file: " + e.Message);
             }
         }
-        public string NextID()
-        {
-            Random rand = new Random();
-            String id = "OD" + rand.Next(1, 999);
-
-            while (FindOrderDetailsByID(id) == true)
-            {
-                id = "OD" + rand.Next(1, 999);
-            }
-            return id;
-
-        }
-
-        public List<OrderDetails> GetOrderDetailsByOrderID(String orderId)
-        {
-            List<OrderDetails> ordersD = new List<OrderDetails>();
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-            {
-                if (orderId.Equals(_ordersDetailsList[i].GetOrderID()))
-                    ordersD.Add(_ordersDetailsList[i]);
-            }
-            return ordersD;
-        }
-        public void ShowOrderDetails2( string id)
-        {
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-                if (_ordersDetailsList[i].GetID().Equals(id))
-                    Console.WriteLine(_ordersDetailsList[i].GetOrderDetails());
-
-        }
-       
-        public void DeleteOrderDetailsByOrderID(String orderId)
-        {
-
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-            {
-                if (orderId.Equals(_ordersDetailsList[i].GetID()))
-                {
-
-                    _ordersDetailsList.RemoveAt(i);
-                }
-
-            }
-
-
-        }
-
     }
 }

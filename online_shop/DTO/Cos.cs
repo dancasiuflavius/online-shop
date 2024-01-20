@@ -1,4 +1,8 @@
 ﻿using online_shop.Models;
+using online_shop.OrderDetail;
+using online_shop.OrderDetail.Service;
+using online_shop.Orders.Service;
+using online_shop.Products.Model;
 using online_shop.Products.Serivce;
 using online_shop.Services;
 using System;
@@ -14,10 +18,17 @@ namespace online_shop.DTO
     {
         public List<ProductDto> _products;
 
+        private IProductComandService _productComandService;
+        private IProductQuerryService _productQuerryService;
+        private IOrderDetailsComandService _orderDetailsComandService;
+        private IOrderDetailsQuerryService _orderDetailsQuerryService;
+        private IOrderComandService _orderComandService;
+        private IOrderQuerryService _orderQuerryService;
 
-  
 
-         
+
+
+
         private Cos(List<ProductDto> products)
         {
             _products = products;
@@ -26,6 +37,14 @@ namespace online_shop.DTO
         public Cos()
         {
             _products = new List<ProductDto>();
+
+            _productComandService = ProductComandServiceSingleton.Instance;
+            _productQuerryService = ProductQuerryServiceSingleton.Instance;
+            _orderComandService = OrderComandServiceSingleton.Instance;
+            _orderQuerryService = OrderQuerryServiceSingleton.Instance;
+            _orderDetailsComandService = OrderDetailComandServiceSingleton.Instance;
+            _orderDetailsQuerryService = OrderDetailQuerryServiceSingleton.Instance;
+
         }
 
         public bool FindProduct(ProductDto product)
@@ -81,21 +100,23 @@ namespace online_shop.DTO
         }
 
 
-        public CreateOrderRequest createOrder(ServiceOrders order,ServiceOrderDetails serviceOrderDetails, ServiceProducts serviceProd,Customer customer)
+        public CreateOrderRequest createOrder(Customer customer)
         {
             CreateOrderRequest request = new CreateOrderRequest();
             request.Details = new List<OrderDetails>();
-            int total=0;
-            this._products.ForEach(x => {
+            int total = 0;
+            this._products.ForEach(x =>
+            {
                 total += x.TotalPrice;
 
 
             });
-            request.order = new Order(order.NextID(), customer.GetID(), total, "created");
-            this._products.ForEach(x => {
-                request.Details.Add(new OrderDetails(serviceOrderDetails.NextID(),request.order.GetOrderID(),x.ID,x.TotalPrice,x.Qty));
+            request.order = new Order(_orderQuerryService.NextID(), customer.GetID(), total, "created");
+            this._products.ForEach(x =>
+            {
+                request.Details.Add(new OrderDetails(_orderDetailsQuerryService.NextID(), request.order.GetOrderID(), x.ID, x.TotalPrice, x.Qty));
             });
-            serviceProd.UpdateStock(_products);
+            _productQuerryService.UpdateStock(_products);
             return request;
 
         }

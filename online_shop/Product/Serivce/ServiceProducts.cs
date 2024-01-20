@@ -1,8 +1,9 @@
 ﻿using online_shop.DTO;
 using online_shop.Models;
+using online_shop.OrderDetail;
 using online_shop.Products.Model;
 
-namespace online_shop.Products.Serivce
+namespace online_shop.Products.Model
 {
     public class ServiceProducts
     {
@@ -281,6 +282,8 @@ namespace online_shop.Products.Serivce
             return id;
 
         }
+
+        
 
     }
 }
