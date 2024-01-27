@@ -1,13 +1,6 @@
-﻿using online_shop.Orders.Service;
-using online_shop.Products.Model;
-using online_shop.Products.Serivce;
+﻿using online_shop.Models;
 using online_shop.Users.Models;
 using online_shop.Users.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace online_shop.Views
 {
@@ -15,11 +8,16 @@ namespace online_shop.Views
     {
         private IUserComandService _userComandService;
         private IUserQuerryService _userQuerryService;
+        //private Customer _customer;
+        //private Admin admin;
+
 
         public ViewLogin()
         {
             _userComandService = UserComandServiceSingleton.Instance;
             _userQuerryService = UserQuerryServiceSingleton.Instance;
+            //_customer = new Customer("customer", 1, "customer1@mail", "123", "Flavius", "Sibiu Cisnadie Str Cetatii 46", 77771212);
+            //admin = new Admin("admin", 444, "admin@mail", "qwer1324", "lowest permission");
         }
         public void LoginFunction()
         {
@@ -32,22 +30,33 @@ namespace online_shop.Views
             parola = Console.ReadLine();
 
 
-            User user = _userQuerryService.findUserByEmailAndPassword(email, parola); 
+            User user = new User();
+            user =_userQuerryService.findUserByEmailAndPassword(email, parola); 
             
             String rol = "";
-            
-            rol = user.GetType();
+            if (user != null)
+            {
+                rol = user.GetType();
 
-            if (rol.Equals("admin"))
-            {
-                ViewAdmin admin = new ViewAdmin();
-                admin.Play();
+                if (rol.Equals("admin"))
+                {
+                    
+                    ViewAdmin admin = new ViewAdmin(user as Admin);
+                    admin.Play();
+                }
+                else if (rol.Equals("customer"))
+                {
+                    
+                    ViewCustomer customer = new ViewCustomer(user as Customer);
+                    customer.Play();
+                }
             }
-            else if (rol.Equals("customer"))
-            {
-                ViewCustomer customer = new ViewCustomer();
-                customer.Play();
-            }
+            else
+                Console.WriteLine("Utilizator inexistent.");
+                
+            
+           
+           
             
 
         }

@@ -15,5 +15,6 @@ namespace online_shop.Orders.Service
         bool CancelOrder(Customer customer, String orderID);
         void ReadOrder();
         void ShowOrders();
+        Order GetOrderByID(string orderID);
     }
 }

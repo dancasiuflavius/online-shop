@@ -10,6 +10,7 @@ using online_shop.Products.Serivce;
 using online_shop.Products.Model;
 using online_shop.OrderDetail.Service;
 using online_shop.Users.Service;
+using online_shop.Users.Models;
 
 internal class Program
 {
@@ -56,8 +57,10 @@ internal class Program
         view.Play();
 
         //IUserQuerryService userQuerryService = UserQuerryServiceSingleton.Instance;
+        //Customer _customer = new Customer("customer", 1, "customer1@mail", "123", "Flavius", "Sibiu Cisnadie Str Cetatii 46", 77771212);
+        //Admin admin = new Admin("admin", 444, "admin@mail", "qwer1324", "lowest permission");
 
-        //Console.WriteLine(userQuerryService.findUserByEmailAndPassword("admin@mail.com", "444").ToString());
+        //userQuerryService.findUserByEmailAndPassword("admin@mail.com", "qwer1324").ToString();
 
         //IOrderQuerryService order = OrderQuerryServiceSingleton.Instance;
         //order.ShowOrders();

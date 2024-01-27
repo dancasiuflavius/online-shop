@@ -12,11 +12,13 @@ namespace online_shop.Users.Service
     {
         private List<User> _usersList;
 
-        
+        private string _filePath;
 
         public UserQuerryService()
         {
             _usersList = new List<User>();
+            _filePath = GetDirectory();
+            ReadUser();
             
         }
         public UserQuerryService(List<User> users)

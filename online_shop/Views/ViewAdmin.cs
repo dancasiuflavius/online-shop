@@ -16,22 +16,24 @@ namespace online_shop.Views
 {
     public class ViewAdmin
     {
-        private Admin admin;
+        private Admin _admin;
         private IProductComandService _productComandService;
         private IProductQuerryService _productQuerryService;
         private IOrderDetailsComandService _orderDetailsComandService;
         private IOrderDetailsQuerryService _orderDetailsQuerryService;
         private IOrderComandService _orderComandService;
         private IOrderQuerryService _orderQuerryService;
-        public ViewAdmin()
+        public ViewAdmin(Admin admin)
         {
-            admin = new Admin("admin", 444, "admin@mail", "qwer1324", "lowest permission");
+          
             _productComandService = ProductComandServiceSingleton.Instance;
             _productQuerryService = ProductQuerryServiceSingleton.Instance;
             _orderDetailsComandService = OrderDetailComandServiceSingleton.Instance;
             _orderDetailsQuerryService = OrderDetailQuerryServiceSingleton.Instance;
             _orderComandService = OrderComandServiceSingleton.Instance;
             _orderQuerryService = OrderQuerryServiceSingleton.Instance;
+            _admin = admin;
+            
         }
 
         public void Meniu()

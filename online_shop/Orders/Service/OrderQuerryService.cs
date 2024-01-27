@@ -115,5 +115,14 @@ namespace online_shop.Orders.Service
 
 
         }
+        public Order GetOrderByID(string orderID)
+        {
+            for(int i =0;i<_ordersList.Count;i++)
+            {
+                if (_ordersList[i].GetOrderID().Equals(orderID))
+                    return _ordersList[i];
+            }
+            return null;
+        }
     }
 }

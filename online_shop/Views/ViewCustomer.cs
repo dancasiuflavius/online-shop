@@ -29,7 +29,7 @@ namespace online_shop.Views
         private IOrderQuerryService _orderQuerryService;
 
 
-        public ViewCustomer()
+        public ViewCustomer(Customer customer)
         {
            
             _productComandService = ProductComandServiceSingleton.Instance;
@@ -40,8 +40,8 @@ namespace online_shop.Views
             _orderQuerryService = OrderQuerryServiceSingleton.Instance;
             _basket= new Cos();
             _order = new CreateOrderRequest();
+            _customer = customer;
             
-            _customer = new Customer("customer", 1, "customer1@mail", "123", "Flavius", "Sibiu Cisnadie Str Cetatii 46", 77771212);
 
         }
         public void Meniu()
@@ -205,25 +205,36 @@ namespace online_shop.Views
         }
         public void CancelOrder()
         {
-            Console.WriteLine("Introduceti ID-ul comenzii");
-            String orderID = "";
-            orderID = Console.ReadLine();
-           
+            
+            
+                Console.WriteLine("Introduceti ID-ul comenzii");
+                String orderID = "";
+                orderID = Console.ReadLine();
+            Order order = new Order();
+            order = _orderQuerryService.GetOrderByID(orderID);
+
+            if (_customer.GetID().Equals(order.GetCustomerID()))
+            {
+
                 if (_orderQuerryService.CancelOrder(_customer, orderID) == true)
                     Console.WriteLine("Comanda cu ID-ul: " + orderID + " a fost anulata cu succes!");
                 else
                     Console.WriteLine("Nu puteti anula o comanda inexistenta/care nu va apartine.");
-            
-            
-            List<OrderDetails> orderDetails = _orderDetailsQuerryService.GetOrderDetailsByOrderID(orderID);
-            _productQuerryService.UpdateStock(orderDetails);
+
+
+                List<OrderDetails> orderDetails = _orderDetailsQuerryService.GetOrderDetailsByOrderID(orderID);
+                _productQuerryService.UpdateStock(orderDetails);
 
 
 
-            _productComandService.SaveProduct();
-            _orderComandService.SaveOrder();
-            _orderQuerryService.ReadOrder();            
-            _productQuerryService.ReadProduct();
+                _productComandService.SaveProduct();
+                _orderComandService.SaveOrder();
+                _orderQuerryService.ReadOrder();
+                _productQuerryService.ReadProduct();
+            }
+            else
+                Console.WriteLine("Nu puteti anula o comanda care nu va apartine.");
+           
 
 
         }
