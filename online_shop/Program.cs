@@ -6,6 +6,10 @@ using online_shop.Views;
 using online_shop.OrderDetail;
 using online_shop.Orders;
 using online_shop.Orders.Service;
+using online_shop.Products.Serivce;
+using online_shop.Products.Model;
+using online_shop.OrderDetail.Service;
+using online_shop.Users.Service;
 
 internal class Program
 {
@@ -36,7 +40,27 @@ internal class Program
         //OrderQuerryService _oQService = new OrderQuerryService(orderList);
         //Console.WriteLine(_oQService.FindOrderByID("O3"));
 
-        ViewCustomer view = new ViewCustomer();
+
+        //Product prod = new Product("P2", "Laptop", 3000, "Asus ROG", "3 / 3 / 2023 12:00:00 AM", 100);
+        //List<Product> products = new List<Product>();
+        //products.Add(prod);
+
+        //IProductQuerryService productQuerryService = ProductQuerryServiceSingleton.Instance;
+        //if (productQuerryService.FindProductByID2("P5") != null)
+        //    Console.WriteLine("Exista");
+        //else
+        //    Console.WriteLine("Nu exista");
+
+
+        ViewLogin view = new ViewLogin();
         view.Play();
+
+        //IUserQuerryService userQuerryService = UserQuerryServiceSingleton.Instance;
+
+        //Console.WriteLine(userQuerryService.findUserByEmailAndPassword("admin@mail.com", "444").ToString());
+
+        //IOrderQuerryService order = OrderQuerryServiceSingleton.Instance;
+        //order.ShowOrders();
+
     }
 }

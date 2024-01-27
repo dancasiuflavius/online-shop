@@ -13,5 +13,6 @@ namespace online_shop.Products.Model
         bool RemoveProduct(string id);
         bool UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId);
         void SaveProduct();
+      
     }
 }

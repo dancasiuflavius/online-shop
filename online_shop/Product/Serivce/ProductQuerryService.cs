@@ -37,7 +37,7 @@ namespace online_shop.Products.Serivce
 
             return filePath;
         }
-        private void ReadProduct()
+        public void ReadProduct()
         {
             try
             {
@@ -81,7 +81,7 @@ namespace online_shop.Products.Serivce
             return false;
         }
 
-        public Product FindProductByID(string productId)
+        public Product FindProductByID2(string productId)
         {
             for (int i = 0; i < _productsList.Count(); i++)
             {
@@ -105,7 +105,7 @@ namespace online_shop.Products.Serivce
             {
 
 
-                Product product = FindProductByID(x.ID);
+                Product product = FindProductByID2(x.ID);
                 product.SetStock(product.GetStock() - x.Qty);
 
             });
@@ -117,10 +117,39 @@ namespace online_shop.Products.Serivce
             orderDetails.ForEach(x =>
             {
 
-                Product product = FindProductByID(x.GetProductID());
-                product.SetStock(product.GetStock() + x.GetQuantity());
-
+                Product product = FindProductByID2(x.GetProductID());
+                if (product != null)
+                
+                    product.SetStock(product.GetStock() + x.GetQuantity());
+                else
+                {
+                    //todo;
+                }
+                                
             });
+
+        }
+        private bool FindProductByID3(string productId)
+        {
+            for (int i = 0; i < _productsList.Count(); i++)
+            {
+                if (productId.Equals(_productsList[i].GetProductID()))
+                    return true;
+            }
+
+            return false;
+        }
+        public string NextID()
+        {
+            Random rand = new Random();
+            string id = "P" + rand.Next(1, 999);
+
+            while (FindProductByID3(id) == true)
+            {
+                id = "P" + rand.Next(1, 999);
+            }
+            return id;
+
         }
     }
 }

@@ -10,6 +10,8 @@ namespace online_shop.Users.Service
     public interface IUserQuerryService
     {
         bool isUserById(int id);
-        User findUserById(int id);  
+        User findUserById(int id);
+        User findUserByEmailAndPassword(string email, string password);
+        void ReadUser();
     }
 }

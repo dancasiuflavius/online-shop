@@ -1,6 +1,7 @@
 ﻿using online_shop.DTO;
 using online_shop.Models;
 using online_shop.OrderDetail;
+using online_shop.OrderDetail.Service;
 using online_shop.Orders.Service;
 using online_shop.Products.Model;
 using online_shop.Products.Serivce;
@@ -33,7 +34,12 @@ namespace online_shop.Views
            
             _productComandService = ProductComandServiceSingleton.Instance;
             _productQuerryService = ProductQuerryServiceSingleton.Instance;
+            _orderDetailsComandService = OrderDetailComandServiceSingleton.Instance;
+            _orderDetailsQuerryService = OrderDetailQuerryServiceSingleton.Instance;
+            _orderComandService = OrderComandServiceSingleton.Instance;
+            _orderQuerryService = OrderQuerryServiceSingleton.Instance;
             _basket= new Cos();
+            _order = new CreateOrderRequest();
             
             _customer = new Customer("customer", 1, "customer1@mail", "123", "Flavius", "Sibiu Cisnadie Str Cetatii 46", 77771212);
 
@@ -86,6 +92,12 @@ namespace online_shop.Views
                         break;
                     case 6:
                         SendOrder();
+                        break;
+                    case 7:
+                        CancelOrder();
+                        break;
+                    case 8:
+                        ShowOrderDetails();
                         break;
                     default:
                         Console.WriteLine("Comanda invalida");
@@ -165,19 +177,65 @@ namespace online_shop.Views
         }
         public void SendOrder()
         {
+            
             CreateOrderRequest request = this._basket.createOrder(_customer);
-            _orderComandService.AddOrder(request.order);
-            request.Details.ForEach(x =>
+            if (request.order.GetAmmount() != 0)
             {
+                _orderComandService.AddOrder(request.order);
+                request.Details.ForEach(x =>
+                {
 
-                _orderDetailsComandService.AddOrderDetails(x);
-            });
-            request.order.SetOrderStatus("Done");
-            _orderDetailsComandService.SaveOrderDetails();
-            _orderComandService.SaveOrder();
+                    _orderDetailsComandService.AddOrderDetails(x);
+                });
+                request.order.SetOrderStatus("Done");
+                _orderDetailsComandService.SaveOrderDetails();
+                _orderComandService.SaveOrder();
+                _productComandService.SaveProduct();
+
+                _orderQuerryService.ReadOrder();
+                _orderDetailsQuerryService.ReadOrderDetails();
+                _productQuerryService.ReadProduct();
+
+                
+
+                Console.WriteLine("Comanda cu ID-ul: " + request.order.GetOrderID() + " a fost trimisa.");
+            }
+            else
+                Console.WriteLine("Nu puteti trimite o comanda goala.");
+        }
+        public void CancelOrder()
+        {
+            Console.WriteLine("Introduceti ID-ul comenzii");
+            String orderID = "";
+            orderID = Console.ReadLine();
+           
+                if (_orderQuerryService.CancelOrder(_customer, orderID) == true)
+                    Console.WriteLine("Comanda cu ID-ul: " + orderID + " a fost anulata cu succes!");
+                else
+                    Console.WriteLine("Nu puteti anula o comanda inexistenta/care nu va apartine.");
+            
+            
+            List<OrderDetails> orderDetails = _orderDetailsQuerryService.GetOrderDetailsByOrderID(orderID);
+            _productQuerryService.UpdateStock(orderDetails);
+
+
+
             _productComandService.SaveProduct();
+            _orderComandService.SaveOrder();
+            _orderQuerryService.ReadOrder();            
+            _productQuerryService.ReadProduct();
 
-            Console.WriteLine("Comanda cu ID-ul: " + request.order.GetOrderID() + " a fost trimisa.");
+
+        }
+        public void ShowOrderDetails()
+        {
+
+            Console.WriteLine("Introduceti ID-ul comenzii");
+            String orderID = "";
+            orderID = Console.ReadLine();
+            //List<OrderDetails> orderDetails = _serviceOrderDetails.GetOrderDetailsByOrderID(orderID);
+            _orderDetailsQuerryService.ShowOrderDetails2(orderID);
+
         }
 
     }

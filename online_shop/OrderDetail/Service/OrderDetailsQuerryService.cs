@@ -36,7 +36,7 @@ namespace online_shop.OrderDetail
 
             return filePath;
         }
-        private void ReadOrderDetails()
+        public void ReadOrderDetails()
         {
             try
             {
@@ -92,6 +92,23 @@ namespace online_shop.OrderDetail
                 id = "OD" + rand.Next(1, 999);
             }
             return id;
+
+        }
+        public List<OrderDetails> GetOrderDetailsByOrderID(string orderId)
+        {
+            List<OrderDetails> ordersD = new List<OrderDetails>();
+            for (int i = 0; i < _ordersDetailsList.Count; i++)
+            {
+                if (orderId.Equals(_ordersDetailsList[i].GetOrderID()))
+                    ordersD.Add(_ordersDetailsList[i]);
+            }
+            return ordersD;
+        }
+        public void ShowOrderDetails2(string id)
+        {
+            for (int i = 0; i < _ordersDetailsList.Count; i++)
+                if (_ordersDetailsList[i].GetID().Equals(id))
+                    Console.WriteLine(_ordersDetailsList[i].GetOrderDetails());
 
         }
     }

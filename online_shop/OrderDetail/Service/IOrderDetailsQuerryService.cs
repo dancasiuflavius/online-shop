@@ -11,6 +11,9 @@ namespace online_shop.OrderDetail
         bool FindOrderDetails(OrderDetails order);
         bool FindOrderDetailsByID(string orderID);
         void ShowOrderDetails();
+        void ShowOrderDetails2(string id);
         string NextID();
+        void ReadOrderDetails();
+        List<OrderDetails> GetOrderDetailsByOrderID(string orderId);
     }
 }

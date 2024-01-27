@@ -26,7 +26,7 @@ namespace online_shop.OrderDetail
             _ordersDetailsList = orderDetails;
 
         }
-        public string GetDirectory()
+        private string GetDirectory()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
 

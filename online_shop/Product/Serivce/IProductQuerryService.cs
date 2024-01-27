@@ -12,10 +12,12 @@ namespace online_shop.Products.Serivce
     public interface IProductQuerryService
     {
         bool FindProductByID(Product product);
-        Product FindProductByID(string productId);
+        Product FindProductByID2(string productId);
         Product FindProductByName(string name);
         void ShowProducts();
         void UpdateStock(List<ProductDto> productDtos);
         void UpdateStock(List<OrderDetails> orderDetails);
+        void ReadProduct();
+        public string NextID();
     }
 }

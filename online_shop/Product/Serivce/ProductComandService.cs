@@ -25,7 +25,7 @@ namespace online_shop.Products.Model
             _productsList = products;
 
         }
-        public string GetDirectory()
+        private string GetDirectory()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
 

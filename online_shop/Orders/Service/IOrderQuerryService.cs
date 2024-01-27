@@ -12,5 +12,8 @@ namespace online_shop.Orders.Service
         bool FindOrder(Order order);
         bool FindOrderByID(String orderId);
         string NextID();
+        bool CancelOrder(Customer customer, String orderID);
+        void ReadOrder();
+        void ShowOrders();
     }
 }

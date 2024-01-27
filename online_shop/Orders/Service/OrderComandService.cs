@@ -29,7 +29,7 @@ namespace online_shop.Orders.Service
             _ordersList = orders;
 
         }
-        public string GetDirectory()
+        private string GetDirectory()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
 
