@@ -7,7 +7,7 @@ using online_shop.OrderDetail;
 using online_shop.Products;
 using online_shop.Products.Model;
 
-namespace online_shop.Products.Serivce
+namespace online_shop.Products.Model
 {
     public interface IProductQuerryService
     {

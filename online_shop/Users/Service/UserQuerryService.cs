@@ -83,21 +83,37 @@ namespace online_shop.Users.Service
         public User findUserById(int id)
         {
             User user = null;
-            for (int i = 0; i < _usersList.Count; i++)
-                if (_usersList[i].GetID() == id)
-                {
-                    return _usersList[i];
-                }
+            try
+            {
+                for (int i = 0; i < _usersList.Count; i++)
+                    if (_usersList[i].GetID() == id)
+                    {
+                        return _usersList[i];
+                    }
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine($"Null reference encountered: {ex.Message}");
+            }
             return user;
         }
         public User findUserByEmailAndPassword(string email, string password)
         {
             User user = null;
-            for (int i = 0; i < _usersList.Count; i++)
-                if (_usersList[i].GetEmail() == email && _usersList[i].GetPassword() == password)
-                {
-                    return _usersList[i];
-                }
+            try
+            {
+                
+                for (int i = 0; i < _usersList.Count; i++)
+                    if (_usersList[i].GetEmail() == email && _usersList[i].GetPassword() == password)
+                    {
+                        return _usersList[i];
+                    }
+                
+            }          
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine($"Null reference encountered: {ex.Message}");
+            }
             return user;
         }
     }

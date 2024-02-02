@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using online_shop.Models;
+using online_shop.Users.Exceptions;
+using online_shop.Orders.Exceptions;
+using online_shop.Utils;
 
 namespace online_shop.Orders.Service
 {
@@ -80,40 +83,69 @@ namespace online_shop.Orders.Service
             }
             return false;
         }
-        public bool AddOrder(Order order)
+        public void AddOrder(Order order)
         {
             if (FindOrder(order) == true)
-                return false;
+                throw new OrderInvalidException(Constants.OrderInvalidMessage);
             else
                 _ordersList.Add(order);
-            return true;
+           
         }
-        public bool RemoveOrder(String id)
-        {
-            for (int i = 0; i < _ordersList.Count; i++)
+        
+            public void RemoveOrder(string id)
             {
-                if (_ordersList[i].GetOrderID().Equals(id))
+                try
                 {
-                    _ordersList.RemoveAt(i);
-                    return true;
-                }
+                    for (int i = 0; i < _ordersList.Count; i++)
+                    {
+                        if (_ordersList[i].GetOrderID().Equals(id))
+                        {
+                            _ordersList.RemoveAt(i);
+                            return;
+                        }
+                    }
+
+                    throw new OrderNotFoundException(Constants.OrderNotFoundMessage);
+                 }
+                catch (OrderNotFoundException ex)
+                {
+                Console.WriteLine($"Error removing product: {ex.Message}");
             }
-            return false;
-        }
-        public bool UpdateOrder(String id, int customerID, int ammount, String OrderStatus, String newId)
+                
+
+            }
+
+        
+        public void UpdateOrder(String id, int customerID, int ammount, String OrderStatus, String newId)
         {
-            for (int i = 0; i < _ordersList.Count; i++)
-            {
-                if (_ordersList[i].GetOrderID().Equals(id))
+           
+                try
                 {
-                    _ordersList[i].SetCustomerID(customerID);
-                    _ordersList[i].SetAmmount(ammount);
-                    _ordersList[i].SetOrderStatus(OrderStatus);
-                    _ordersList[i].SetOrderID(newId);
-                    return true;
+                    for (int i = 0; i < _ordersList.Count; i++)
+                    {
+                        if (_ordersList[i].GetOrderID().Equals(id))
+                        {
+                            _ordersList[i].SetCustomerID(customerID);
+                            _ordersList[i].SetAmmount(ammount);
+                            _ordersList[i].SetOrderStatus(OrderStatus);
+                            _ordersList[i].SetOrderID(newId);
+                            Console.WriteLine("Order updated successfully.");
+                            return;
+                        }
+                    }
+
+                    throw new OrderNotFoundException(Constants.OrderNotFoundMessage);
                 }
-            }
-            return false;
+                catch (OrderNotFoundException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                }
+            
+
         }
         public String toSave()
         {

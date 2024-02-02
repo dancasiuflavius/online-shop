@@ -9,9 +9,10 @@ namespace online_shop.Orders.Service
 {
     public interface IOrderComandService
     {
-        bool AddOrder(Order order);
-        bool RemoveOrder(String id);
-        bool UpdateOrder(String id, int customerID, int ammount, String OrderStatus, String newId);
+        void AddOrder(Order order);
+        void RemoveOrder(String id);
+        void UpdateOrder(String id, int customerID, int ammount, String OrderStatus, String newId);
+        void ReadOrder();
         void SaveOrder();
     }
 }

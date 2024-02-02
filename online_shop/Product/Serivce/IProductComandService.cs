@@ -9,9 +9,9 @@ namespace online_shop.Products.Model
 {
     public interface IProductComandService
     {
-        bool AddProduct(Product product);
-        bool RemoveProduct(string id);
-        bool UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId);
+        void AddProduct(Product product);
+        void RemoveProduct(string id);
+        void UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId);
         void SaveProduct();
       
     }

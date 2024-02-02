@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using online_shop.Utils;
+using online_shop.OrderDetail.Exceptions;
 
 
 namespace online_shop.OrderDetail
@@ -82,41 +84,80 @@ namespace online_shop.OrderDetail
             }
             return false;
         }
-        public bool AddOrderDetails(OrderDetails orderDetails)
+        public void AddOrderDetails(OrderDetails orderDetails)
         {
-            if (FindOrderDetails(orderDetails) == true)
-                return false;
-            else
+            try
+            {
+                if (FindOrderDetails(orderDetails))
+                {
+                    throw new DuplicateOrderDetailException(Constants.DuplicateOrderDetailMessage);
+                }
+
                 _ordersDetailsList.Add(orderDetails);
-            return true;
-        }
-        public bool RemoveOrderDetails(string id)
-        {
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-            {
-                if (_ordersDetailsList[i].GetOrderID().Equals(id))
-                {
-                    _ordersDetailsList.RemoveAt(i);
-                    return true;
-                }
+                Console.WriteLine("Order details added successfully.");
             }
-            return false;
-        }
-        public bool UpdateOrderDetails(string id, string order_Id, string product_id, int price, int qty, string newId)
-        {
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
+            catch (DuplicateOrderDetailException ex)
             {
-                if (_ordersDetailsList[i].GetOrderID().Equals(id))
-                {
-                    _ordersDetailsList[i].SetOrderID(order_Id);
-                    _ordersDetailsList[i].SetProductID(product_id);
-                    _ordersDetailsList[i].SetPrice(price);
-                    _ordersDetailsList[i].SetPrice(qty);
-                    _ordersDetailsList[i].SetOrderID(newId);
-                    return true;
-                }
+                Console.WriteLine($"Error: {ex.Message}");
             }
-            return false;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+        public void RemoveOrderDetails(string id)
+        {
+            try
+            {
+                for (int i = 0; i < _ordersDetailsList.Count; i++)
+                {
+                    if (_ordersDetailsList[i].GetOrderID().Equals(id))
+                    {
+                        _ordersDetailsList.RemoveAt(i);
+                        Console.WriteLine("Order details removed successfully.");
+                        return;
+                    }
+                }
+
+                throw new OrderDetailNotFoundException(Constants.OrderDetailNotFoundMessage);
+            }
+            catch (OrderDetailNotFoundException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+        public void UpdateOrderDetails(string id, string order_Id, string product_id, int price, int qty, string newId)
+        {
+            try
+            {
+                for (int i = 0; i < _ordersDetailsList.Count; i++)
+                {
+                    if (_ordersDetailsList[i].GetOrderID().Equals(id))
+                    {
+                        _ordersDetailsList[i].SetOrderID(order_Id);
+                        _ordersDetailsList[i].SetProductID(product_id);
+                        _ordersDetailsList[i].SetPrice(price);
+                        _ordersDetailsList[i].SetQuantity(qty);
+                        _ordersDetailsList[i].SetOrderID(newId);
+                        Console.WriteLine("Order details updated successfully.");
+                        return;
+                    }
+                }
+
+                throw new OrderDetailNotFoundException(Constants.OrderDetailNotFoundMessage);
+            }
+            catch (OrderDetailNotFoundException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            }
         }
         private string toSave()
         {

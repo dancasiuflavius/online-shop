@@ -10,9 +10,9 @@ namespace online_shop.OrderDetail
 {
     public interface IOrderDetailsComandService
     {
-        bool AddOrderDetails(OrderDetails orderDetails);
-        bool RemoveOrderDetails(string id);
-        bool UpdateOrderDetails(string id, string order_Id, string product_id, int price, int qty, string newId);
+        void AddOrderDetails(OrderDetails orderDetails);
+        void RemoveOrderDetails(string id);
+        void UpdateOrderDetails(string id, string order_Id, string product_id, int price, int qty, string newId);
         void SaveOrderDetails();
     }
 }

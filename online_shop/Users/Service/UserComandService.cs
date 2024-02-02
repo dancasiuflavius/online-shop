@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using online_shop.Users.Exceptions;
+using online_shop.Utils;
 
 namespace online_shop.Users.Service
 {
@@ -91,40 +93,42 @@ namespace online_shop.Users.Service
                 }
             return user;
         }
-        public bool AddUser(User user)
+        public void AddUser(User user)
         {
             switch (user)
             {
                 case Customer customer when isUserById(customer.GetID()) == false: //Daca user este customer, modificam user in Customer, cautam in lista, daca e fals adaugam
                     _usersList.Add(customer);
-                    return true;
+                    break;
+                   
 
                 case Admin admin when isUserById(admin.GetID()) == false:
                     _usersList.Add(admin);
-                    return true;
+                    break;
+                   
 
                 default:
-                    return false;
+                    throw new UserNotFoundException(Constants.UserNotFoundMessage);
             }
         }
-        public bool RemoveUser(User user)
+        public void RemoveUser(User user)
         {
             switch (user)
             {
                 case Customer customer when isUserById(customer.GetID()) == true:
                     _usersList.Remove(customer);
-                    return true;
+                    break;
 
                 case Admin admin when isUserById(admin.GetID()) == true:
                     _usersList.Remove(admin);
-                    return true;
+                    break;
 
                 default:
-                    return false;
+                    throw new UserNotFoundException(Constants.UserNotFoundMessage);
             }
 
         }
-        public bool UpdateUser(UpdateUser user)
+        public void UpdateUser(UpdateUser user)
         {
             switch (user.type)
             {
@@ -136,7 +140,7 @@ namespace online_shop.Users.Service
                     customer.SetAdress(user.newAdress);
                     customer.SetFullName(user.newFullName);
 
-                    return true;
+                    break;
 
                 case "admin":
                     Admin admin = findUserById(user.id) as Admin;
@@ -144,11 +148,12 @@ namespace online_shop.Users.Service
                     admin.SetEmail(user.newMail);
                     admin.SetPassword(user.newPasword);
 
-                    return true;
+                    break;
 
 
+                
                 default:
-                    return false;
+                    throw new UserNotFoundException(Constants.UserNotFoundMessage);
             }
         }
         public void SaveUser()

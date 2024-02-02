@@ -10,9 +10,9 @@ namespace online_shop.Users.Service
 {
     public interface IUserComandService
     {
-        bool AddUser(User user);
-        bool RemoveUser(User user);
-        bool UpdateUser(UpdateUser user);
+        void AddUser(User user);
+        void RemoveUser(User user);
+        void UpdateUser(UpdateUser user);
         void SaveUser();
     }
 }

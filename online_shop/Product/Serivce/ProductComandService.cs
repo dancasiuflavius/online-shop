@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using online_shop.Products.Exceptions;
+using online_shop.Utils;
+using online_shop.Orders.Exceptions;
 
 namespace online_shop.Products.Model
 {
@@ -105,42 +108,65 @@ namespace online_shop.Products.Model
 
             return false;
         }
-        public bool AddProduct(Product product)
+        public void AddProduct(Product product)
         {
             if (FindProductByID(product) == true)
-                return false;
+                throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
             else
                 _productsList.Add(product);
-            return true;
         }
-        public bool RemoveProduct(string id)
-        {
-            for (int i = 0; i < _productsList.Count; i++)
+
+            public void RemoveProduct(string id)
             {
-                if (_productsList[i].GetProductID().Equals(id))
+                try
                 {
-                    _productsList.RemoveAt(i);
-                    return true;
+                    for (int i = 0; i < _productsList.Count; i++)
+                    {
+                        if (_productsList[i].GetProductID().Equals(id))
+                        {
+                            _productsList.RemoveAt(i);
+                            return;
+                        }
+                    }
+
+                    throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
+                }
+                catch (ProductNotFoundExceptions ex)
+                {
+
+                    Console.WriteLine($"Error removing product: {ex.Message}");
                 }
             }
-            return false;
-        }
-        public bool UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId)
-        {
-            for (int i = 0; i < _productsList.Count; i++)
-            {
-                if (_productsList[i].GetProductID().Equals(id))
+
+             public void UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId)
+             {
+                try
                 {
-                    _productsList[i].SetProductName(name);
-                    _productsList[i].SetPrice(price);
-                    _productsList[i].SetDescription(description);
-                    _productsList[i].SetCreationDate(createDate);
-                    _productsList[i].SetStock(stock);
-                    _productsList[i].SetProductID(newId);
-                    return true;
+                    for (int i = 0; i < _productsList.Count; i++)
+                    {
+                        if (_productsList[i].GetProductID().Equals(id))
+                        {
+                            _productsList[i].SetProductName(name);
+                            _productsList[i].SetPrice(price);
+                            _productsList[i].SetDescription(description);
+                            _productsList[i].SetCreationDate(createDate);
+                            _productsList[i].SetStock(stock);
+                            _productsList[i].SetProductID(newId);
+                            return;
+                        }
+                    }
+
+                    throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
+                }
+                catch (ProductNotFoundExceptions ex)
+                {
+                    // Poți trata excepția aici sau să o arunci mai departe, să o înregistrezi, etc.
+                    Console.WriteLine($"Error updating product: {ex.Message}");
                 }
             }
-            return false;
+
         }
+
+       
     }
-}
+
