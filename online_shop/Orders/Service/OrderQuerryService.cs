@@ -66,28 +66,23 @@ namespace online_shop.Orders.Service
         }
         public void ShowOrders()
         {
-            for (int i = 0; i < _ordersList.Count; i++)
-                Console.WriteLine(_ordersList[i].GetOrderDescription());
+            foreach (var order in _ordersList)
+            {
+                Console.WriteLine(order.GetOrderDescription());
+            }
         }
+
         public bool FindOrder(Order order)
         {
-            for (int i = 0; i < _ordersList.Count(); i++)
-            {
-                if (order.GetOrderID().Equals(_ordersList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersList.Any(existingOrder => existingOrder.GetOrderID() == order.GetOrderID());
         }
-        public bool FindOrderByID(String orderId)
+
+        public bool FindOrderByID(string orderId)
         {
-            for (int i = 0; i < _ordersList.Count(); i++)
-            {
-                if (orderId.Equals(_ordersList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersList.Any(order => order.GetOrderID() == orderId);
         }
-        public string NextID()
+
+        public string NextID() //// ????
         {
             Random rand = new Random();
             String id = "O" + rand.Next(1, 999);
@@ -98,31 +93,22 @@ namespace online_shop.Orders.Service
             }
             return id;
         }
-        public bool CancelOrder(Customer customer, String orderID)
+        public bool CancelOrder(Customer customer, string orderID)/// First Or Default?
         {
-            for (int i = 0; i < _ordersList.Count; i++)
+            var orderToCancel = _ordersList.FirstOrDefault(order => order.GetOrderID() == orderID && order.GetCustomerID() == customer.GetID());
+
+            if (orderToCancel != null)
             {
-                if (_ordersList[i].GetOrderID().Equals(orderID) && customer.GetID().Equals(_ordersList[i].GetCustomerID()))
-                {
-                    _ordersList[i].SetOrderStatus("Declined");
-                    return true;
-
-                }
-
-
+                orderToCancel.SetOrderStatus("Declined");
+                return true;
             }
+
             return false;
-
-
         }
         public Order GetOrderByID(string orderID)
         {
-            for(int i =0;i<_ordersList.Count;i++)
-            {
-                if (_ordersList[i].GetOrderID().Equals(orderID))
-                    return _ordersList[i];
-            }
-            return null;
+            return _ordersList.FirstOrDefault(order => order.GetOrderID() == orderID);
         }
+
     }
 }

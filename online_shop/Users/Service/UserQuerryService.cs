@@ -116,5 +116,15 @@ namespace online_shop.Users.Service
             }
             return user;
         }
+        //public User FindUserById(int id)
+        //{
+        //    return _usersList.FirstOrDefault(user => user.GetID() == id);
+        //}
+
+        //public User FindUserByEmailAndPassword(string email, string password)
+        //{
+        //    return _usersList.FirstOrDefault(user => user.GetEmail() == email && user.GetPassword() == password);
+        //}
+
     }
 }

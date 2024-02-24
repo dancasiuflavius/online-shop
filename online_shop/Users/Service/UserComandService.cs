@@ -93,6 +93,11 @@ namespace online_shop.Users.Service
                 }
             return user;
         }
+        //private User FindUserById(int id)
+        //{
+        //    return _usersList.FirstOrDefault(user => user.GetID() == id);
+        //}
+
         public void AddUser(User user)
         {
             switch (user)

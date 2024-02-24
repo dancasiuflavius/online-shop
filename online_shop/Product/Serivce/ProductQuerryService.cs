@@ -62,55 +62,40 @@ namespace online_shop.Products.Model
         }
         public Product FindProductByName(string name)
         {
-            for (int i = 0; i < _productsList.Count(); i++)
-            {
-                if (_productsList[i].GetProductName().Equals(name))
-                    return _productsList[i];
-            }
-
-            return null;
+            return _productsList.FirstOrDefault(p => p.GetProductName() == name);
         }
+
         public bool FindProductByID(Product product)
         {
-            for (int i = 0; i < _productsList.Count(); i++)
-            {
-                if (product.GetProductID().Equals(_productsList[i].GetProductID()))
-                    return true;
-            }
-
-            return false;
+            return _productsList.Any(p => p.GetProductID() == product.GetProductID());
         }
 
         public Product FindProductByID2(string productId)
         {
-            for (int i = 0; i < _productsList.Count(); i++)
-            {
-                if (productId.Equals(_productsList[i].GetProductID()))
-                    return _productsList[i];
-            }
-
-            return null;
+            return _productsList.FirstOrDefault(p => p.GetProductID() == productId);
         }
+
         public void ShowProducts()
         {
-            for (int i = 0; i < _productsList.Count; i++)
-                Console.WriteLine(_productsList[i].GetProductDescription());
-
+            foreach (var product in _productsList)
+            {
+                Console.WriteLine(product.GetProductDescription());
+            }
         }
+
         public void UpdateStock(List<ProductDto> productDtos)
         {
-
-
             productDtos.ForEach(x =>
             {
-
-
-                Product product = FindProductByID2(x.ID);
-                product.SetStock(product.GetStock() - x.Qty);
-
+                var product = FindProductByID2(x.ID);
+                if (product != null)
+                {
+                    product.SetStock(product.GetStock() - x.Qty);
+                }
             });
         }
-        public void UpdateStock(List<OrderDetails> orderDetails)
+
+        public void UpdateStock(List<OrderDetails> orderDetails)// Nu il fac, afecteaza programul
         {
 
 
@@ -131,14 +116,9 @@ namespace online_shop.Products.Model
         }
         private bool FindProductByID3(string productId)
         {
-            for (int i = 0; i < _productsList.Count(); i++)
-            {
-                if (productId.Equals(_productsList[i].GetProductID()))
-                    return true;
-            }
-
-            return false;
+            return _productsList.Any(p => p.GetProductID() == productId);
         }
+
         public string NextID()
         {
             Random rand = new Random();

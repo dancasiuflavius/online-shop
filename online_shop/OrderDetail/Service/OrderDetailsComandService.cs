@@ -63,102 +63,63 @@ namespace online_shop.OrderDetail
         }
         public void ShowOrderDetails()
         {
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-                Console.WriteLine(_ordersDetailsList[i].GetOrderDetails());
+            _ordersDetailsList.ForEach(orderDetail => Console.WriteLine(orderDetail.GetOrderDetails()));
         }
+
         public bool FindOrderDetails(OrderDetails order)
         {
-            for (int i = 0; i < _ordersDetailsList.Count(); i++)
-            {
-                if (order.GetOrderID().Equals(_ordersDetailsList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersDetailsList.Any(od => od.GetOrderID() == order.GetOrderID());
         }
+
         public bool FindOrderDetailsByID(string orderID)
         {
-            for (int i = 0; i < _ordersDetailsList.Count(); i++)
-            {
-                if (orderID.Equals(_ordersDetailsList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersDetailsList.Any(order => order.GetOrderID() == orderID);
         }
         public void AddOrderDetails(OrderDetails orderDetails)
         {
-            try
+            if (_ordersDetailsList.Any(order => order.GetOrderID() == orderDetails.GetOrderID()))
             {
-                if (FindOrderDetails(orderDetails))
-                {
-                    throw new DuplicateOrderDetailException(Constants.DuplicateOrderDetailMessage);
-                }
+                Console.WriteLine("Error: " + Constants.DuplicateOrderDetailMessage);
+                return;
+            }
 
-                _ordersDetailsList.Add(orderDetails);
-                Console.WriteLine("Order details added successfully.");
-            }
-            catch (DuplicateOrderDetailException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-            }
+            _ordersDetailsList.Add(orderDetails);
+            Console.WriteLine("Order details added successfully.");
         }
+
         public void RemoveOrderDetails(string id)
         {
-            try
-            {
-                for (int i = 0; i < _ordersDetailsList.Count; i++)
-                {
-                    if (_ordersDetailsList[i].GetOrderID().Equals(id))
-                    {
-                        _ordersDetailsList.RemoveAt(i);
-                        Console.WriteLine("Order details removed successfully.");
-                        return;
-                    }
-                }
+            var removed = _ordersDetailsList.RemoveAll(order => order.GetOrderID().Equals(id));
 
-                throw new OrderDetailNotFoundException(Constants.OrderDetailNotFoundMessage);
-            }
-            catch (OrderDetailNotFoundException ex)
+            if (removed > 0)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("Order details removed successfully.");
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                Console.WriteLine("Error: " + Constants.OrderDetailNotFoundMessage);
             }
         }
+
         public void UpdateOrderDetails(string id, string order_Id, string product_id, int price, int qty, string newId)
         {
-            try
-            {
-                for (int i = 0; i < _ordersDetailsList.Count; i++)
-                {
-                    if (_ordersDetailsList[i].GetOrderID().Equals(id))
-                    {
-                        _ordersDetailsList[i].SetOrderID(order_Id);
-                        _ordersDetailsList[i].SetProductID(product_id);
-                        _ordersDetailsList[i].SetPrice(price);
-                        _ordersDetailsList[i].SetQuantity(qty);
-                        _ordersDetailsList[i].SetOrderID(newId);
-                        Console.WriteLine("Order details updated successfully.");
-                        return;
-                    }
-                }
+            var orderDetail = _ordersDetailsList.FirstOrDefault(order => order.GetOrderID().Equals(id));
 
-                throw new OrderDetailNotFoundException(Constants.OrderDetailNotFoundMessage);
-            }
-            catch (OrderDetailNotFoundException ex)
+            if (orderDetail != null)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                orderDetail.SetOrderID(order_Id);
+                orderDetail.SetProductID(product_id);
+                orderDetail.SetPrice(price);
+                orderDetail.SetQuantity(qty);
+                orderDetail.SetOrderID(newId);
+                Console.WriteLine("Order details updated successfully.");
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                Console.WriteLine("Error: " + Constants.OrderDetailNotFoundMessage);
             }
         }
+
         private string toSave()
         {
 

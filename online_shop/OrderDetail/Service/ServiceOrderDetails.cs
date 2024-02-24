@@ -59,19 +59,27 @@ namespace online_shop.OrderDetail
                 Console.WriteLine("An error occurred while reading the file: " + e.Message);
             }
         }
+        //public void ShowOrderDetails()
+        //{
+        //    for (int i = 0; i < _ordersDetailsList.Count; i++)
+        //        Console.WriteLine(_ordersDetailsList[i].GetOrderDetails());
+        //}
         public void ShowOrderDetails()
         {
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-                Console.WriteLine(_ordersDetailsList[i].GetOrderDetails());
+            _ordersDetailsList.ForEach(orderDetail => Console.WriteLine(orderDetail.GetOrderDetails()));
         }
+        //public bool FindOrderDetails(OrderDetails order)
+        //{
+        //    for (int i = 0; i < _ordersDetailsList.Count(); i++)
+        //    {
+        //        if (order.GetOrderID().Equals(_ordersDetailsList[i].GetOrderID()))
+        //            return true;
+        //    }
+        //    return false;
+        //}
         public bool FindOrderDetails(OrderDetails order)
         {
-            for (int i = 0; i < _ordersDetailsList.Count(); i++)
-            {
-                if (order.GetOrderID().Equals(_ordersDetailsList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersDetailsList.Any(od => od.GetOrderID() == order.GetOrderID());
         }
         public bool FindOrderDetailsByID(string orderID)
         {

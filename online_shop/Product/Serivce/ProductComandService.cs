@@ -100,73 +100,58 @@ namespace online_shop.Products.Model
         }
         private bool FindProductByID(Product product)
         {
-            for (int i = 0; i < _productsList.Count(); i++)
-            {
-                if (product.GetProductID().Equals(_productsList[i].GetProductID()))
-                    return true;
-            }
-
-            return false;
+            return _productsList.Any(p => p.GetProductID() == product.GetProductID());
         }
+
         public void AddProduct(Product product)
         {
-            if (FindProductByID(product) == true)
-                throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
-            else
-                _productsList.Add(product);
-        }
-
-            public void RemoveProduct(string id)
+            if (FindProductByID(product))
             {
-                try
-                {
-                    for (int i = 0; i < _productsList.Count; i++)
-                    {
-                        if (_productsList[i].GetProductID().Equals(id))
-                        {
-                            _productsList.RemoveAt(i);
-                            return;
-                        }
-                    }
-
-                    throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
-                }
-                catch (ProductNotFoundExceptions ex)
-                {
-
-                    Console.WriteLine($"Error removing product: {ex.Message}");
-                }
+                throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
             }
-
-             public void UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId)
-             {
-                try
-                {
-                    for (int i = 0; i < _productsList.Count; i++)
-                    {
-                        if (_productsList[i].GetProductID().Equals(id))
-                        {
-                            _productsList[i].SetProductName(name);
-                            _productsList[i].SetPrice(price);
-                            _productsList[i].SetDescription(description);
-                            _productsList[i].SetCreationDate(createDate);
-                            _productsList[i].SetStock(stock);
-                            _productsList[i].SetProductID(newId);
-                            return;
-                        }
-                    }
-
-                    throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
-                }
-                catch (ProductNotFoundExceptions ex)
-                {
-                    // Poți trata excepția aici sau să o arunci mai departe, să o înregistrezi, etc.
-                    Console.WriteLine($"Error updating product: {ex.Message}");
-                }
+            else
+            {
+                _productsList.Add(product);
             }
-
         }
 
-       
+        public void RemoveProduct(string id)
+        {
+            var productToRemove = _productsList.FirstOrDefault(p => p.GetProductID() == id);
+
+            if (productToRemove != null)
+            {
+                _productsList.Remove(productToRemove);
+            }
+            else
+            {
+                throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
+            }
+        }
+
+
+        public void UpdateProduct(string id, string name, int price, string description, DateTime createDate, int stock, string newId)
+        {
+            var productToUpdate = _productsList.FirstOrDefault(p => p.GetProductID() == id);
+
+            if (productToUpdate != null)
+            {
+                productToUpdate.SetProductName(name);
+                productToUpdate.SetPrice(price);
+                productToUpdate.SetDescription(description);
+                productToUpdate.SetCreationDate(createDate);
+                productToUpdate.SetStock(stock);
+                productToUpdate.SetProductID(newId);
+                Console.WriteLine("Product updated successfully.");
+            }
+            else
+            {
+                throw new ProductNotFoundExceptions(Constants.ProductNotFoundMessage);
+            }
+        }
+
+
+
     }
+}
 

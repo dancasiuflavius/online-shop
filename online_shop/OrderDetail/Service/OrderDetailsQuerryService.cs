@@ -61,28 +61,20 @@ namespace online_shop.OrderDetail
         }
         public void ShowOrderDetails()
         {
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-                Console.WriteLine(_ordersDetailsList[i].GetOrderDetails());
+            _ordersDetailsList.ForEach(orderDetail => Console.WriteLine(orderDetail.GetOrderDetails()));
         }
+
         public bool FindOrderDetails(OrderDetails order)
         {
-            for (int i = 0; i < _ordersDetailsList.Count(); i++)
-            {
-                if (order.GetOrderID().Equals(_ordersDetailsList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersDetailsList.Any(od => od.GetOrderID() == order.GetOrderID());
         }
+
         public bool FindOrderDetailsByID(string orderID)
         {
-            for (int i = 0; i < _ordersDetailsList.Count(); i++)
-            {
-                if (orderID.Equals(_ordersDetailsList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersDetailsList.Any(order => order.GetOrderID() == orderID);
         }
-        public string NextID()
+
+        public string NextID()///???
         {
             Random rand = new Random();
             string id = "OD" + rand.Next(1, 999);
@@ -96,20 +88,16 @@ namespace online_shop.OrderDetail
         }
         public List<OrderDetails> GetOrderDetailsByOrderID(string orderId)
         {
-            List<OrderDetails> ordersD = new List<OrderDetails>();
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-            {
-                if (orderId.Equals(_ordersDetailsList[i].GetOrderID()))
-                    ordersD.Add(_ordersDetailsList[i]);
-            }
-            return ordersD;
+            return _ordersDetailsList.Where(order => orderId.Equals(order.GetOrderID())).ToList();
         }
         public void ShowOrderDetails2(string id)
         {
-            for (int i = 0; i < _ordersDetailsList.Count; i++)
-                if (_ordersDetailsList[i].GetID().Equals(id))
-                    Console.WriteLine(_ordersDetailsList[i].GetOrderDetails());
+            var orderDetails = _ordersDetailsList.Where(order => order.GetID().Equals(id));
 
+            foreach (var orderDetail in orderDetails)
+            {
+                Console.WriteLine(orderDetail.GetOrderDetails());
+            }
         }
     }
 }

@@ -67,86 +67,58 @@ namespace online_shop.Orders.Service
         }
         private bool FindOrder(Order order)
         {
-            for (int i = 0; i < _ordersList.Count(); i++)
-            {
-                if (order.GetOrderID().Equals(_ordersList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersList.Any(existingOrder => existingOrder.GetOrderID().Equals(order.GetOrderID()));
         }
-        private bool FindOrderByID(String orderId)
+        private bool FindOrderByID(string orderId)
         {
-            for (int i = 0; i < _ordersList.Count(); i++)
-            {
-                if (orderId.Equals(_ordersList[i].GetOrderID()))
-                    return true;
-            }
-            return false;
+            return _ordersList.Any(order => orderId.Equals(order.GetOrderID()));
         }
+
         public void AddOrder(Order order)
         {
-            if (FindOrder(order) == true)
-                throw new OrderInvalidException(Constants.OrderInvalidMessage);
-            else
-                _ordersList.Add(order);
-           
-        }
-        
-            public void RemoveOrder(string id)
+            if (_ordersList.Any(existingOrder => existingOrder.GetOrderID() == order.GetOrderID()))
             {
-                try
-                {
-                    for (int i = 0; i < _ordersList.Count; i++)
-                    {
-                        if (_ordersList[i].GetOrderID().Equals(id))
-                        {
-                            _ordersList.RemoveAt(i);
-                            return;
-                        }
-                    }
-
-                    throw new OrderNotFoundException(Constants.OrderNotFoundMessage);
-                 }
-                catch (OrderNotFoundException ex)
-                {
-                Console.WriteLine($"Error removing product: {ex.Message}");
+                throw new OrderInvalidException(Constants.OrderInvalidMessage);
             }
-                
-
+            else
+            {
+                _ordersList.Add(order);
             }
-
-        
-        public void UpdateOrder(String id, int customerID, int ammount, String OrderStatus, String newId)
-        {
-           
-                try
-                {
-                    for (int i = 0; i < _ordersList.Count; i++)
-                    {
-                        if (_ordersList[i].GetOrderID().Equals(id))
-                        {
-                            _ordersList[i].SetCustomerID(customerID);
-                            _ordersList[i].SetAmmount(ammount);
-                            _ordersList[i].SetOrderStatus(OrderStatus);
-                            _ordersList[i].SetOrderID(newId);
-                            Console.WriteLine("Order updated successfully.");
-                            return;
-                        }
-                    }
-
-                    throw new OrderNotFoundException(Constants.OrderNotFoundMessage);
-                }
-                catch (OrderNotFoundException ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-                }
-            
-
         }
+
+
+        public void RemoveOrder(string id)
+        {
+            var orderToRemove = _ordersList.FirstOrDefault(order => order.GetOrderID().Equals(id));
+
+            if (orderToRemove != null)
+            {
+                _ordersList.Remove(orderToRemove);
+            }
+            else
+            {
+                throw new OrderNotFoundException(Constants.OrderNotFoundMessage);
+            }
+        }
+
+        public void UpdateOrder(string id, int customerID, int amount, string orderStatus, string newId)
+        {
+            var orderToUpdate = _ordersList.FirstOrDefault(order => order.GetOrderID().Equals(id));
+
+            if (orderToUpdate != null)
+            {
+                orderToUpdate.SetCustomerID(customerID);
+                orderToUpdate.SetAmmount(amount);
+                orderToUpdate.SetOrderStatus(orderStatus);
+                orderToUpdate.SetOrderID(newId);
+                Console.WriteLine("Order updated successfully.");
+            }
+            else
+            {
+                throw new OrderNotFoundException(Constants.OrderNotFoundMessage);
+            }
+        }
+
         public String toSave()
         {
 
